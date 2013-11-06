@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -14,11 +13,6 @@ import android.view.WindowManager;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
-	
-    /**
-     * The tag is used to identify the class while logging.
-     */
-    private final String TAG = getClass().getName();
     
    private GameThread _thread;
    private Context ctx;
@@ -38,7 +32,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
    @Override
    public boolean onKeyDown(int keyCode, KeyEvent msg) {
-	   //Log.e(TAG, "on key down");
        return _thread.getGameState().keyPressed(keyCode, msg);
    }
 
@@ -59,7 +52,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
    //Implemented as part of the SurfaceHolder.Callback interface
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-       _thread.stop();
+       //_thread.stop();
 	}
 	
 	@SuppressLint("NewApi")
