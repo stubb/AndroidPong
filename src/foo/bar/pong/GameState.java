@@ -3,6 +3,7 @@ package foo.bar.pong;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -101,19 +102,24 @@ public class GameState {
 
 	public boolean keyPressed(int keyCode, KeyEvent msg)
 	{
-		if(keyCode == KeyEvent.KEYCODE_DPAD_LEFT) //left
+		Boolean bla = false;
+		Log.e(TAG, "vol up");
+		if(keyCode == KeyEvent.KEYCODE_VOLUME_UP) //left
 		{
 			_topBatX += _batSpeed;
 			_bottomBatX -= _batSpeed;
+			Log.e(TAG, "vol up");
+			bla = true;
 		}
 
-		if(keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) //right
+		if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) //right
 		{
 			_topBatX -= _batSpeed;
 			_bottomBatX += _batSpeed;
+			bla = true;
 		}
-
-		return true;
+		Log.e(TAG, bla.toString());
+		return bla;
 	}
 	
 	//the draw method
@@ -122,6 +128,13 @@ public class GameState {
 		
 		//Clear the screen
 		canvas.drawRGB(20, 20, 20);
+		
+		Paint paintText = new Paint(); 
+		canvas.drawPaint(paintText); 
+		paintText.setColor(Color.WHITE); 
+		paintText.setTextSize(16); 
+		canvas.drawText("My Text", 50, 100, paintText); 
+		
 
 		paint.setARGB(200, 255, 0, 0);		
 
@@ -134,6 +147,8 @@ public class GameState {
 
 		// border
 		canvas.drawRect(new Rect(0, 0, _screenWidth - 1, _screenHeight - 1), p);
+		
+
 		
 		//set the colour
 		paint.setARGB(200, 0, 200, 0);

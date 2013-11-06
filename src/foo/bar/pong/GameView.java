@@ -3,12 +3,19 @@ package foo.bar.pong;
 import android.os.Handler;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
+	
+    /**
+     * The tag is used to identify the class while logging.
+     */
+    private final String TAG = getClass().getName();
+    
    private GameThread _thread;
 
    public GameView(Context context, AttributeSet attrs) {
@@ -17,14 +24,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
    	//So we can listen for events...
        SurfaceHolder holder = getHolder();
        holder.addCallback(this);
-       setFocusable(true); 
-
+       //setFocusable(true); 
+       requestFocus();
+       setFocusableInTouchMode(true);
        //and instantiate the thread
        _thread = new GameThread(holder, context, new Handler());
    }  
 
    @Override
    public boolean onKeyDown(int keyCode, KeyEvent msg) {
+	   Log.e(TAG, "on key down");
        return _thread.getGameState().keyPressed(keyCode, msg);
    }
 
