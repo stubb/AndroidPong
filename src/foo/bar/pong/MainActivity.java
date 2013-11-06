@@ -7,17 +7,32 @@ import android.provider.SyncStateContract.Constants;
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.widget.Switch;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
+	
+	private SharedPreferences settings;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
+		
+		this.settings = getPreferences(MODE_PRIVATE);
+		this.checkForSettings();
+	}
+	
+	private void checkForSettings()	{
+		/*if first start then create alert dialog which asks for user input
+		* make related buttons unclickable, if the user doesn't have a
+		* username, pw or ssid in his settings
+		*/
 	}
 	
 	public void startGame(View view) {

@@ -28,7 +28,7 @@
 		    android:id="@+id/userNameEditText"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:text="test... delete me later! >:c"
+		    android:inputType="text"
 		    android:layout_weight="0.25"/>
        
     </LinearLayout>
@@ -49,7 +49,6 @@
 		    android:id="@+id/userPWEditText"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:text="test..."
 		    android:layout_weight="0.25"
 		    android:inputType="textPassword"/>
        
@@ -71,7 +70,7 @@
 		    android:id="@+id/ssidEditText"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:text="test..."
+		    android:inputType="text"
 		    android:layout_weight="0.25"/>
        
     </LinearLayout>
@@ -92,14 +91,13 @@
 		    android:id="@+id/wifiPWEditText"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:text="test... again"
 		    android:layout_weight="0.25"
 		    android:inputType="textPassword"/>
        
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/showPWCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"

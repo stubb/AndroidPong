@@ -32,12 +32,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pipboy=0x7f020001;
     }
     public static final class id {
-        public static final int checkBox1=0x7f09000a;
         public static final int homepage=0x7f09000c;
         public static final int hostGameBtn=0x7f090003;
         public static final int iconBigImg=0x7f090000;
         public static final int joinGameBtn=0x7f090004;
         public static final int settings=0x7f09000b;
+        public static final int showPWCheckBox=0x7f09000a;
         public static final int singlePlayerBtn=0x7f090002;
         public static final int ssidEditText=0x7f090008;
         public static final int statsBtn=0x7f090005;
@@ -60,6 +60,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int hostGame=0x7f060004;
         public static final int joinGame=0x7f060005;
         public static final int password=0x7f060009;
+        public static final int restore=0x7f06000c;
+        public static final int save=0x7f06000b;
         public static final int settings=0x7f060001;
         public static final int showKey=0x7f06000a;
         /**  main menu button titles 

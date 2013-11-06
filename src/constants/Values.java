@@ -4,9 +4,10 @@ import android.net.Uri;
 
 public interface Values {
 	
-	public static final String PREFERENCES = "pongSettings";
+	public static final String firstStart = "first";
 	
-	public static final Uri HOMEPAGE_URI = Uri.parse("http://www.htw-berlin.de/");
+	// uri to homepage
+	public static final Uri HOMEPAGE_URI = Uri.parse("http://www.google.com/");
 	
 	// constants for settings
 	public static final String USER_NAME = "username";
@@ -15,6 +16,10 @@ public interface Values {
 	public static final String WIFI_PW = "wifiPW";
 	public static final String[] SETTINGS_DATA = {USER_NAME, USER_PW, SSID,
 		WIFI_PW};
-	public static final String PREF_READING_ERROR = "error while reading preference";
-
+	public static final int POS_WIFI_PW = 3;
+	public static final String onSettingsResultSave = "Settings successfully"
+			+ " saved.";
+	public static final String onSettingsResultRestore = "Settings successfully"
+			+ " restored.";
+	
 }
