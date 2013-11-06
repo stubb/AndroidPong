@@ -9,6 +9,7 @@
 		android:layout_height="wrap_content"
 		android:text="@string/settings"
 		android:layout_gravity="center"
+		android:padding="10sp"
 		android:textAppearance="?android:attr/textAppearanceLarge"/>
     
     <!-- username -->
@@ -103,5 +104,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="@string/showKey" />
+    
+    <!-- save and restore -->
+    <LinearLayout 
+       	android:layout_width="match_parent"
+       	android:layout_height="wrap_content"
+       	android:orientation="horizontal">
+	   
+        <Button
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/save"
+		    android:layout_weight="0.5"
+		    android:onClick="save"/>
+        
+		<Button
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/restore"
+		    android:layout_weight="0.5"
+		    android:onClick="restore"/>
+       
+    </LinearLayout>
 
 </LinearLayout>

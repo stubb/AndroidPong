@@ -1,7 +1,9 @@
 package foo.bar.pong;
 
+import constants.Values;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Constants;
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,8 +13,6 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
-
-	public static final String URL = "http://www.htw-berlin.de/";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 			startActivity(intent);
 		}
 		else if(item.getItemId() == R.id.homepage) {
-			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
+			intent = new Intent(Intent.ACTION_VIEW, Values.HOMEPAGE_URI);
 			startActivity(intent);
 		}
 		return false;
