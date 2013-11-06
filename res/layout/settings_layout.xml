@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/settings"
+		android:layout_gravity="center"
+		android:textAppearance="?android:attr/textAppearanceLarge"/>
+    
+    <!-- username -->
+    <LinearLayout 
+       	android:layout_width="match_parent"
+       	android:layout_height="wrap_content"
+       	android:orientation="horizontal">
+	   
+		<TextView
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/username"
+		    android:layout_weight="0.75"/>
+		
+		<EditText
+		    android:id="@+id/userNameEditText"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="test... delete me later! >:c"
+		    android:layout_weight="0.25"/>
+       
+    </LinearLayout>
+    
+    <!-- user password -->
+    <LinearLayout 
+       	android:layout_width="match_parent"
+       	android:layout_height="wrap_content"
+       	android:orientation="horizontal">
+	   
+		<TextView
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/password"
+		    android:layout_weight="0.75"/>
+		
+		<EditText
+		    android:id="@+id/userPWEditText"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="test..."
+		    android:layout_weight="0.25"
+		    android:inputType="textPassword"/>
+       
+    </LinearLayout>
+    
+    <!-- SSID -->
+    <LinearLayout 
+       	android:layout_width="match_parent"
+       	android:layout_height="wrap_content"
+       	android:orientation="horizontal">
+	   
+		<TextView
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/ssid"
+		    android:layout_weight="0.75"/>
+		
+		<EditText
+		    android:id="@+id/ssidEditText"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="test..."
+		    android:layout_weight="0.25"/>
+       
+    </LinearLayout>
+    
+    <!-- wifi password -->
+    <LinearLayout 
+       	android:layout_width="match_parent"
+       	android:layout_height="wrap_content"
+       	android:orientation="horizontal">
+	   
+		<TextView
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/password"
+		    android:layout_weight="0.75"/>
+		
+		<EditText
+		    android:id="@+id/wifiPWEditText"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="test... again"
+		    android:layout_weight="0.25"
+		    android:inputType="textPassword"/>
+       
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/showKey" />
+
+</LinearLayout>

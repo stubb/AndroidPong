@@ -2,7 +2,19 @@
 <resources>
 
     <string name="app_name">Pong</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="settings">Settings</string>
+    <string name="homepage">Visit homepage</string>
+    
+	<!-- main menu button titles -->
+	<string name="singlePlayer">Start game</string>
+	<string name="hostGame">Host game</string>
+	<string name="joinGame">Join game</string>
+	<string name="stats">Statistics</string>
+	
+	<!-- settings -->
+	<string name="username">Username:</string>
+	<string name="ssid">SSID:</string>
+	<string name="password">Password:</string>	
+	<string name="showKey">Show password</string>
 
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iconBigImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:adjustViewBounds="true"
+        android:maxHeight="100sp"
+        android:maxWidth="100sp"
+        android:src="@drawable/pipboy" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/iconBigImg"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textSize="30sp"
+        android:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/singlePlayerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iconBigImg"
+        android:onClick="startGame"
+        android:text="@string/singlePlayer" />
+
+    <Button
+        android:id="@+id/hostGameBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/singlePlayerBtn"
+        android:onClick="hostGame"
+        android:text="@string/hostGame" />
+
+    <Button
+        android:id="@+id/joinGameBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hostGameBtn"
+        android:onClick="joinGame"
+        android:text="@string/joinGame" />
+
+    <Button
+        android:id="@+id/statsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/joinGameBtn"
+        android:onClick="showStats"
+        android:text="@string/stats" />
+
+</RelativeLayout>
