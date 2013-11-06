@@ -43,33 +43,15 @@ public class GameState {
 	int _bottomBatY = 600;
 	final int _batSpeed = 3;
 
-	public GameState(Context context)
+	public GameState(Context context, Point screenSize)
 	{
 		ctx = context;
-		setScreenDimensions();
+		setScreenDimensions(screenSize);
 	}
 
-	@SuppressLint("NewApi")
-	private void setScreenDimensions() {
-		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-
-		Point size = new Point(1,1);
-		
-		Log.e(TAG, "bla");
-
-		if (android.os.Build.VERSION.SDK_INT >= 13) {
-			display.getSize(size);
-			_screenWidth = size.x;
-			_screenHeight = size.y;
-		}
-		else { 
-			_screenWidth = display.getWidth(); 
-			_screenHeight = display.getHeight();
-		}
-		Log.e(TAG, _screenWidth.toString());
-		Log.e(TAG, _screenHeight.toString());
-				
+	private void setScreenDimensions(Point screenSize) {
+		_screenWidth = screenSize.x;
+		_screenHeight = screenSize.y;
 	}
 	
 	//The update method
@@ -103,12 +85,12 @@ public class GameState {
 	public boolean keyPressed(int keyCode, KeyEvent msg)
 	{
 		Boolean bla = false;
-		Log.e(TAG, "vol up");
+		//Log.e(TAG, "vol up");
 		if(keyCode == KeyEvent.KEYCODE_VOLUME_UP) //left
 		{
 			_topBatX += _batSpeed;
 			_bottomBatX -= _batSpeed;
-			Log.e(TAG, "vol up");
+			//Log.e(TAG, "vol up");
 			bla = true;
 		}
 
@@ -118,7 +100,7 @@ public class GameState {
 			_bottomBatX += _batSpeed;
 			bla = true;
 		}
-		Log.e(TAG, bla.toString());
+		//Log.e(TAG, bla.toString());
 		return bla;
 	}
 	

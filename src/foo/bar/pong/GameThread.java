@@ -3,6 +3,7 @@ package foo.bar.pong;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Handler;
 import android.view.SurfaceHolder;
 
@@ -13,11 +14,11 @@ public class GameThread extends Thread {
 	private Paint _paint;
 	private GameState _state;
 
-	public GameThread(SurfaceHolder surfaceHolder, Context context, Handler handler)
+	public GameThread(SurfaceHolder surfaceHolder, Context context, Handler handler, Point screenSize)
 	{
 		_surfaceHolder = surfaceHolder;
 		_paint = new Paint();
-		_state = new GameState(context);
+		_state = new GameState(context, screenSize);
 	}
 
 	@Override
