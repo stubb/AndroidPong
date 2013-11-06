@@ -1,10 +1,12 @@
-package foo.bar.pong;
+package gameengine;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
@@ -19,12 +21,12 @@ public class GameState {
      * The tag is used to identify the class while logging.
      */
     private final String TAG = getClass().getName();
-    
-	private Context ctx = null;
 	
-	//screen width and height
-	Integer _screenWidth = 300;
-	Integer _screenHeight = 420;
+	int screenWidth = 300;
+	int screenHeight = 420;
+	
+	//The Arena
+	int borderSize = 5; 
 
 	//The ball
 	final int _ballSize = 10;
@@ -37,21 +39,21 @@ public class GameState {
 	final int spaceToBorder = 20;
 	final int _batLength = 75;
 	final int _batHeight = 10;
-	int _topBatX = (_screenWidth/2) - (_batLength / 2);
+	int _topBatX = (screenWidth/2) - (_batLength / 2);
 	int _topBatY = spaceToBorder;
-	int _bottomBatX = (_screenWidth/2) - (_batLength / 2);	
+	int _bottomBatX = (screenWidth/2) - (_batLength / 2);	
 	int _bottomBatY = 600;
 	final int _batSpeed = 3;
 
-	public GameState(Context context, Point screenSize)
+	public GameState(Point screenSize)
 	{
-		ctx = context;
 		setScreenDimensions(screenSize);
+		borderSize = (int)(screenWidth * 0.02);
 	}
 
 	private void setScreenDimensions(Point screenSize) {
-		_screenWidth = screenSize.x;
-		_screenHeight = screenSize.y;
+		screenWidth = screenSize.x;
+		screenHeight = screenSize.y;
 	}
 	
 	//The update method
@@ -61,13 +63,13 @@ public class GameState {
 		_ballY += _ballVelocityY;
 
 		//DEATH!
-		if(_ballY >= _screenHeight || _ballY <= 0) {
-			_ballX = _screenWidth / 2;
-			_ballY = _screenHeight / 2;
+		if(_ballY >= screenHeight || _ballY <= 0) {
+			_ballX = screenWidth / 2;
+			_ballY = screenHeight / 2;
 		}  	
 		
 		//Collisions with the sides
-		if(_ballX >= _screenWidth || _ballX <= 0) {
+		if(_ballX >= screenWidth || _ballX <= 0) {
 			_ballVelocityX *= -1;
 		}
 		
@@ -104,10 +106,23 @@ public class GameState {
 		return bla;
 	}
 	
-	//the draw method
-	public void draw(Canvas canvas, Paint paint) {
-
+	private void drawArena(Canvas canvas) {
+		Paint paint = new Paint();
 		
+		// Border
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeWidth(borderSize);
+		paint.setARGB(255, 255, 255, 255);
+		canvas.drawRect(new Rect(borderSize/2, borderSize/2, screenWidth - borderSize/2, screenHeight - borderSize/2), paint);
+		
+		// Middle Line
+		paint.setPathEffect(new DashPathEffect(new float[]{borderSize, borderSize * 0.6f}, 0));
+		canvas.drawLine(0, screenHeight / 2, screenWidth, screenHeight / 2, paint);
+	}
+	//the draw method
+	public void draw(Canvas canvas) {
+
+		Paint paint = new Paint();
 		//Clear the screen
 		canvas.drawRGB(20, 20, 20);
 		
@@ -118,17 +133,8 @@ public class GameState {
 		canvas.drawText("My Text", 50, 100, paintText); 
 		
 
-		paint.setARGB(200, 255, 0, 0);		
-
-		// border
-		Paint p = new Paint();
-		
-		p.setStyle(Paint.Style.STROKE);
-		p.setStrokeWidth(1);
-		p.setARGB(255, 255, 0, 0);
-
-		// border
-		canvas.drawRect(new Rect(0, 0, _screenWidth - 1, _screenHeight - 1), p);
+		paint.setARGB(200, 255, 0, 0);
+		drawArena(canvas);
 		
 
 		

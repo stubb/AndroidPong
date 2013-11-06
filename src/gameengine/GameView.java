@@ -1,4 +1,4 @@
-package foo.bar.pong;
+package gameengine;
 
 import android.os.Handler;
 import android.annotation.SuppressLint;
@@ -33,7 +33,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
        requestFocus();
        setFocusableInTouchMode(true);
        //and instantiate the thread
-       _thread = new GameThread(holder, context, new Handler(), getScreensize());
+       _thread = new GameThread(holder, new Handler(), getScreensize());
    }  
 
    @Override
