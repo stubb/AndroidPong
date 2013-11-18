@@ -3,10 +3,16 @@ package gameengine;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
-
+  
+	/**
+   * The tag is used to identify the class while logging
+   */
+  private final String LOGTAG = getClass().getName();
+  
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder _surfaceHolder;
 	private GameState _state;
@@ -19,12 +25,16 @@ public class GameThread extends Thread {
 
 	@Override
 	public void run() {
-		while(true)
+		boolean gameRunning = true;
+		int i = 1;
+		while(gameRunning)
 		{
 			Canvas canvas = _surfaceHolder.lockCanvas();
-			_state.update();
+			gameRunning = _state.update();
 			_state.draw(canvas);
 			_surfaceHolder.unlockCanvasAndPost(canvas);
+			Log.e(LOGTAG, Integer.toString(i));
+			i++;
 		}
 	}
 

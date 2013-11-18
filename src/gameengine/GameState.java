@@ -77,8 +77,17 @@ public class GameState {
 		screenHeight = screenSize.y;
 	}
 	
+	private boolean gameRunning() {
+		if (p2_score == 3) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
 	//The update method
-	public void update() {
+	public boolean update() {
 
 		ballX += ballSpeedX;
 		ballY += ballSpeedY;
@@ -108,6 +117,7 @@ public class GameState {
 		if (ballY - ballSize / 2 <= p2_batY + p2_batHeight && (ballX - ballSize / 2 >= p2_batX && ballX + ballSize / 2 <= p2_batX + p2_batLength)) {
 			ballSpeedY *= -1;
 		}
+		return gameRunning();
 	}
 	
 	private void resetBall() {
