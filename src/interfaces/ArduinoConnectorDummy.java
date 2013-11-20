@@ -9,6 +9,7 @@ public class ArduinoConnectorDummy implements ArduinoConnectable {
 
 	@Override
 	public int getMinValue() {
+		
 		return 60;
 	}
 

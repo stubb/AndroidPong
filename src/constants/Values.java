@@ -38,4 +38,7 @@ public interface Values {
 			+ " identical with the given password.";
 	public static final String ERROR_NO_CONNECTION = "No connection to the Arduino Board found.";
 	
+	public static final String CALIBRATED_MIN_VAL = "calMinVal";
+	public static final String CALIBRATED_MAX_VAL = "calMaxVal";
+	
 }
