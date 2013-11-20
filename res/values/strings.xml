@@ -6,9 +6,9 @@
     <string name="homepage">Visit homepage</string>
     
 	<!-- main menu button titles -->
-	<string name="singlePlayer">Start game</string>
-	<string name="hostGame">Host game</string>
-	<string name="joinGame">Join game</string>
+	<string name="normalModePlay">Start normal mode game</string>
+	<string name="expertModePlay">Start expert mode game</string>
+	<string name="trainingsModePlay">Start trainings mode game</string>
 	<string name="stats">Statistics</string>
 	
 	<!-- settings -->

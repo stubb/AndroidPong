@@ -25,34 +25,34 @@
         android:text="@string/app_name" />
 
     <Button
-        android:id="@+id/singlePlayerBtn"
+        android:id="@+id/normalModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/iconBigImg"
-        android:onClick="startGame"
-        android:text="@string/singlePlayer" />
+        android:onClick="startNormalModeGame"
+        android:text="@string/normalModePlay" />
 
     <Button
-        android:id="@+id/hostGameBtn"
+        android:id="@+id/expertModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/singlePlayerBtn"
-        android:onClick="hostGame"
-        android:text="@string/hostGame" />
+        android:layout_below="@id/normalModePlayBtn"
+        android:onClick="startExpertModeGame"
+        android:text="@string/expertModePlay" />
 
     <Button
-        android:id="@+id/joinGameBtn"
+        android:id="@+id/trainingsModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hostGameBtn"
-        android:onClick="joinGame"
-        android:text="@string/joinGame" />
+        android:layout_below="@id/expertModePlayBtn"
+        android:onClick="startTrainingsModeGame"
+        android:text="@string/trainingsModePlay" />
 
     <Button
         android:id="@+id/statsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/joinGameBtn"
+        android:layout_below="@id/trainingsModePlayBtn"
         android:onClick="showStats"
         android:text="@string/stats" />
 
