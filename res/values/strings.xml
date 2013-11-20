@@ -14,9 +14,16 @@
 	<!-- settings -->
 	<string name="username">Username:</string>
 	<string name="ssid">SSID:</string>
-	<string name="password">Password:</string>	
-	<string name="showKey">Show password</string>
+	<string name="password">Password:</string>
+	<string name="confirmPassword">Confirm:</string>
+	<string name="key">Key:</string>
+	<string name="showKey">Show key</string>
 	<string name="save">Save</string>
 	<string name="restore">Restore</string>
+	<string name="calibrate">Calibrate</string>
+	
+	<!-- calibration -->
+	<string name="min">Minimum</string>
+	<string name="max">Maximum</string>
 
 </resources>

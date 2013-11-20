@@ -1,12 +1,15 @@
 package foo.bar.pong;
 
+import singleton.Connector;
 import constants.Values;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -26,7 +29,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		
 		this.getReferences();
 		this.checkBox.setOnCheckedChangeListener(this);
-		this.settings = getPreferences(MODE_PRIVATE);
+		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.load();
 	}
 	
@@ -34,21 +37,28 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		this.data = new EditText[Values.SETTINGS_DATA.length];
 		this.data[0] = (EditText) findViewById(R.id.userNameEditText);
 		this.data[1] = (EditText) findViewById(R.id.userPWEditText);
-		this.data[2] = (EditText) findViewById(R.id.ssidEditText);
-		this.data[3] = (EditText) findViewById(R.id.wifiPWEditText);
+		this.data[2] = (EditText) findViewById(R.id.confirmPWEditText);
+		this.data[3] = (EditText) findViewById(R.id.ssidEditText);
+		this.data[4] = (EditText) findViewById(R.id.wifiPWEditText);
 		this.checkBox = (CheckBox) findViewById(R.id.showPWCheckBox);
 	}
 	
 	public void save(View view) {
-		Editor editor = this.settings.edit();
-		for(int i=0; i<this.data.length;i++) {
-			editor.putString(Values.SETTINGS_DATA[i],
-					this.data[i].getText().toString());
+		if(this.data[Values.POS_USER_PW].getText().toString().equals(
+				this.data[Values.POS_CONFIRM_PW].getText().toString())) {
+			Editor editor = this.settings.edit();
+			for(int i=0; i<this.data.length;i++) {
+				editor.putString(Values.SETTINGS_DATA[i],
+						this.data[i].getText().toString());
+			}
+			editor.commit();
+			Toast.makeText(this, Values.onSettingsResultSave,
+					Toast.LENGTH_SHORT).show();
+			this.finish();
 		}
-		editor.commit();
-		Toast.makeText(this, Values.onSettingsResultSave,
-				Toast.LENGTH_SHORT).show();
-		this.finish();
+		else {
+			Toast.makeText(this, Values.ERROR_CONFIRM_PW, Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	public void restore(View view) {
@@ -57,12 +67,25 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 				Toast.LENGTH_SHORT).show();
 		this.finish();
 	}
+	
+	public void calibrate(View view) {
+		if(Connector.getInstance().hasConnection()) {
+			Intent intent = new Intent(this, CalibrateActivity.class);
+			startActivity(intent);
+		}
+		else {
+			Toast.makeText(this, Values.ERROR_NO_CONNECTION, Toast.LENGTH_LONG).show();
+		}
+	}
 
 	private void load() {
 		for(int i=0; i<this.data.length;i++) {
-			System.out.println("Debug: "+i+", "+this.data[i].getText().toString());
 			this.data[i].setText(this.settings.getString(Values.SETTINGS_DATA[i],
 					""));
+		}
+		if(this.settings.getString(Values.SETTINGS_DATA[0],"").equals("")) {
+			Button btn = (Button) findViewById(R.id.BtnRestoreSettings);
+			btn.setVisibility(View.INVISIBLE);
 		}
 	}
 

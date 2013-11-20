@@ -1,18 +1,15 @@
 package foo.bar.pong;
 
 import constants.Values;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract.Constants;
-import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
@@ -24,15 +21,22 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
 		
-		this.settings = getPreferences(MODE_PRIVATE);
+		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.checkForSettings();
 	}
 	
 	private void checkForSettings()	{
-		/*if first start then create alert dialog which asks for user input
-		* make related buttons unclickable, if the user doesn't have a
-		* username, pw or ssid in his settings
-		*/
+		//if(this.settings.getBoolean(Values.FIRST_START, true)) {
+		if(true) {
+			Intent intent = new Intent(this, SettingsActivity.class);
+			Editor editor = this.settings.edit();
+			editor.putBoolean(Values.FIRST_START, false);
+			editor.putString(Values.WIFI_SSID, Values.SSID);
+			editor.putString(Values.WIFI_PW, Values.PKEY);
+			editor.commit();
+			Toast.makeText(this, Values.INITIAL_MESSAGE, Toast.LENGTH_LONG).show();
+			startActivity(intent);
+		}
 	}
 	
 	public void startGame(View view) {
