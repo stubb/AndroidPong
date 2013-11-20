@@ -26,8 +26,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 	
 	private void checkForSettings()	{
-		//if(this.settings.getBoolean(Values.FIRST_START, true)) {
-		if(true) {
+		if(this.settings.getBoolean(Values.FIRST_START, true)) {
 			Intent intent = new Intent(this, SettingsActivity.class);
 			Editor editor = this.settings.edit();
 			editor.putBoolean(Values.FIRST_START, false);
@@ -39,15 +38,19 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		}
 	}
 	
-	public void startGame(View view) {
+	public void startNormalModeGame(View view) {
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}
 	
-	public void hostGame(View view) {
+	public void startExpertModeGame(View view) {
+		Intent intent = new Intent(this, GameActivity.class);
+		startActivity(intent);
 	}
 
-	public void joinGame(View view) {
+	public void startTrainingsModeGame(View view) {
+		Intent intent = new Intent(this, GameActivity.class);
+		startActivity(intent);
 	}
 
 	public void showStats(View view) {
