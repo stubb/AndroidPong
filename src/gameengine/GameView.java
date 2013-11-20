@@ -43,16 +43,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
 	}
 
-   //Implemented as part of the SurfaceHolder.Callback interface
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		_thread.start();
 	}
 
-   //Implemented as part of the SurfaceHolder.Callback interface
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		_thread.stop();
+		if (_thread != null) {
+			try {
+			_thread.interrupt();
+			_thread.join();
+			_thread = null;
+			} catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+		}
 	}
 	
 	@SuppressLint("NewApi")
