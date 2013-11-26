@@ -39,16 +39,25 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 	
 	public void startNormalModeGame(View view) {
+		Editor editor = this.settings.edit();
+		editor.putString(Values.GAME_MODE, "normal");
+		editor.commit();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}
 	
 	public void startExpertModeGame(View view) {
+		Editor editor = this.settings.edit();
+		editor.putString(Values.GAME_MODE, "expert");
+		editor.commit();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}
 
 	public void startTrainingsModeGame(View view) {
+		Editor editor = this.settings.edit();
+		editor.putString(Values.GAME_MODE, "training");
+		editor.commit();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}

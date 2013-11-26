@@ -3,7 +3,6 @@ package gameengine;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Handler;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
@@ -19,10 +18,10 @@ public class GameThread extends Thread {
 	private SurfaceHolder _surfaceHolder;
 	private GameState _state;
 
-	public GameThread(SurfaceHolder surfaceHolder, Handler handler, Point screenSize)
+	public GameThread(SurfaceHolder surfaceHolder, Handler handler, Point screenSize, String gameMode)
 	{
 		_surfaceHolder = surfaceHolder;
-		_state = new GameState(screenSize);
+		_state = new GameState(screenSize, gameMode);
 	}
 
 	@Override

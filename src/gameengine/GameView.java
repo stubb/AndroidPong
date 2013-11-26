@@ -1,8 +1,11 @@
 package gameengine;
 
+import constants.Values;
 import android.os.Handler;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -10,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.app.Activity;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
@@ -26,8 +30,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
        //setFocusable(true); 
        requestFocus();
        setFocusableInTouchMode(true);
+       final SharedPreferences settings = ctx.getSharedPreferences(Values.CONFIG, ctx.MODE_PRIVATE);
        //and instantiate the thread
-       _thread = new GameThread(holder, new Handler(), getScreensize());
+       _thread = new GameThread(holder, new Handler(), getScreensize(), settings.getString(Values.GAME_MODE, "normal"));
    }  
 
    @Override

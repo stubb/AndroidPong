@@ -42,8 +42,8 @@ public class GameState {
 	private int ballY = 100;
 	private int ballSpeedX;
 	private int ballSpeedY;
-
-	public GameState(Point screenSize)
+	
+	public GameState(Point screenSize, String gameMode)
 	{
 		setScreenDimensions(screenSize);
 		
@@ -70,6 +70,7 @@ public class GameState {
 		
 		p1_score = 0;
 		p2_score = 0;
+		
 	}
 
 	private void setScreenDimensions(Point screenSize) {
