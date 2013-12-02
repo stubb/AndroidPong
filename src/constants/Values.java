@@ -10,8 +10,10 @@ public interface Values {
 			+" your information for further connection purposes.";
 	
 	// ssid & pw
-	public static final String SSID= "MuscleRecovery";
+	public static final String SSID = "MuscleRecovery";
 	public static final String PKEY = "MuscleRecovery";
+	
+	public static final int SERVER_PORT = 4321;
 	
 	// uri to homepage
 	public static final Uri HOMEPAGE_URI = Uri.parse("http://www.google.com/");

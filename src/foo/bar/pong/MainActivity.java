@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -24,19 +25,26 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
+	/**
+	 * The tag is used to identify the class while logging
+	 */
+	private final String LOGTAG = getClass().getName();
+	
 	private SharedPreferences settings;
+	
 	String temp_text = "";
 	
+	/**
+	 * Thread for handling network stuff.
+	 */
 	Thread netz_thread = new Thread() {
 			public void run() {
 				try {
 					
 					while(true){
-						// networkstuff
-						int server_port = 4321;
 						byte[] message = new byte[1500];
 						DatagramPacket p = new DatagramPacket(message, message.length);
-						DatagramSocket s = new DatagramSocket(server_port);
+						DatagramSocket s = new DatagramSocket(Values.SERVER_PORT);
 						if(isInterrupted()) {
 							s.close();
 							this.join();
@@ -65,17 +73,24 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_layout);
-		
+		setContentView(R.layout.main_layout);	
 		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.checkForSettings();
 		this.enableHotspot();
+		if(!netz_thread.isAlive()) {
+			netz_thread.start();
+		}
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		System.out.println("Destroy hotspot");
+		Log.i(LOGTAG, "Destroy network thread");
+		if(netz_thread != null) {
+			netz_thread.interrupt();
+			netz_thread = null;
+		}
+		Log.i(LOGTAG, "Destroy hotspot");
 		this.stopHotspot();
 	}
 	
