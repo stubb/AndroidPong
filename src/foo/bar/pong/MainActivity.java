@@ -1,13 +1,9 @@
 package foo.bar.pong;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
-import java.util.Vector;
 
+import singleton.Connector;
 import constants.Values;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -33,52 +29,6 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	private SharedPreferences settings;
 	
-	String temp_text = "";
-	
-	Vector<Integer> data = new Vector<Integer>();
-	
-	/**
-	 * Thread for handling network stuff.
-	 */
-	Thread netz_thread = new Thread() {
-		public void run() {
-				try {
-					
-					while(true){
-						byte[] message = new byte[2];
-						DatagramPacket p = new DatagramPacket(message, message.length);
-						DatagramSocket s = new DatagramSocket(Values.SERVER_PORT);
-						if(isInterrupted()) {
-							s.close();
-							this.join();
-						}
-						if(!s.isClosed()){
-							s.receive(p);
-						}				
-
-						int sum = (message[1] & 0xFF) << 8;		
-						sum |= (message[0] & 0xFF);
-						System.out.println("sum: " + sum);
-						
-						data.add(Integer.valueOf(sum));
-						
-						if(!s.isClosed()){
-							s.close();
-						}					
-					}
-				} catch (SocketException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		};
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,19 +41,14 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if(!netz_thread.isAlive()) {
-			netz_thread.start();
-		}
+		Connector.getInstance().startConnection();
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		Log.i(LOGTAG, "Destroy network thread");
-		if(netz_thread != null) {
-			netz_thread.interrupt();
-			netz_thread = null;
-		}
+		Connector.getInstance().killConnection();
 		Log.i(LOGTAG, "Destroy hotspot");
 		this.stopHotspot();
 	}
