@@ -96,31 +96,60 @@ public class GameState {
 		ballX += Math.round((Math.cos(Math.toRadians(angle)))) * ballSpeed;
 		ballY += Math.round((Math.sin(Math.toRadians(angle)) * -1)) * ballSpeed;
 
+		// ===============
 		// Player 2 Death.
+		// ===============
 		if (ballY <= 0) {
 			p1_score += 1;
 			resetBall();
 		}
+		
+		// ===============
 		// Player 1 Death.
+		// ===============
 		if (ballY + ballSize / 2 >= screenHeight) {
 			p2_score += 1;
 			resetBall();
 		}
 		
+		// ================
 		// Seitenkollision.
+		// ================
 		if (ballX - ballSize <= 0 || ballX + ballSize >= screenWidth) {
 			winkel(0);
 		}
-				
-		// Kollision mit Player 1
+		
+		// =======================
+		// Kollision mit Player 1.
+		// =======================
+		// Regulaere Kollision.
 		if (ballY + ballSize >= p1_batY && (ballX - ballSize >= p1_batX && ballX + ballSize <= p1_batX + p1_batLength)) {
 			winkel(180);
 		}
+		// Kollision mit oberen Teil von Schlaeger.
+		else if (ballY + ballSize >= p1_batY && ballY + ballSize < p1_batY + p1_batHeight) {
+			if (ballX + ballSize >= p1_batX && ballX - ballSize <= p1_batX) {
+				winkel(270);
+			} else if (ballX + ballSize >= p1_batX + p1_batLength && ballX - ballSize <= p1_batX + p1_batLength) {
+				winkel(90);
+			}
+		}
+		// Kollision mit unterem Teil von Schlaeger.
+		else if (ballY + ballSize >= p1_batY + p1_batHeight) {
+			if (ballX + ballSize >= p1_batX && ballX - ballSize <= p1_batX) {
+				winkel(0);
+			} else if (ballX + ballSize >= p1_batX + p1_batLength && ballX - ballSize <= p1_batX + p1_batLength) {
+				winkel(0);
+			}
+		}
 		
-		// Kollision mit Player 2
+		// =======================
+		// Kollision mit Player 2.
+		// =======================
 		if (ballY - ballSize <= p2_batY + p2_batHeight && (ballX - ballSize >= p2_batX && ballX + ballSize <= p2_batX + p2_batLength)) {
 			winkel(180);
 		}
+
 		return gameRunning();
 	}
 	
@@ -133,8 +162,8 @@ public class GameState {
 		angle += add;
 		if (angle >= 360)
 			angle -= 360;
-	    short diffW = (short)(add - 90);
-	    short tempEinfW = (short)(angle - diffW);
+	    int diffW = add - 90;
+	    int tempEinfW = angle - diffW;
 	    if (tempEinfW > 90)
 	      angle = (90 - (tempEinfW - 90) + diffW - 180);
 	    else
