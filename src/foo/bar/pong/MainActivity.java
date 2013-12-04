@@ -76,7 +76,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		setContentView(R.layout.main_layout);	
 		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.checkForSettings();
-		this.enableHotspot();
+//		this.enableHotspot();
 		if(!netz_thread.isAlive()) {
 			netz_thread.start();
 		}

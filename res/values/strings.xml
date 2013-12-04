@@ -20,10 +20,10 @@
 	<string name="showKey">Show key</string>
 	<string name="save">Save</string>
 	<string name="restore">Restore</string>
-	<string name="calibrate">Calibrate</string>
-	
 	<!-- calibration -->
+	<string name="calibration">Calibration</string>
 	<string name="min">Minimum</string>
 	<string name="max">Maximum</string>
+	<string name="calibrate">Calibrate</string>
 
 </resources>

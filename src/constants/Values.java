@@ -45,4 +45,7 @@ public interface Values {
 	
 	public static final String GAME_MODE = "normal";
 	
+	// result extras
+	public static final String MIN_MAX_RESULT = "minMaxResult";
+	
 }

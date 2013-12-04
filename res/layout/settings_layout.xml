@@ -1,156 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-    
-    <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/settings"
-		android:layout_gravity="center"
-		android:padding="10sp"
-		android:textAppearance="?android:attr/textAppearanceLarge"/>
-    
-    <!-- username -->
-    <LinearLayout 
-       	android:layout_width="match_parent"
-       	android:layout_height="wrap_content"
-       	android:orientation="horizontal">
-	   
-		<TextView
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/username"
-		    android:layout_weight="0.75"/>
-		
-		<EditText
-		    android:id="@+id/userNameEditText"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:inputType="text"
-		    android:layout_weight="0.25"/>
-       
-    </LinearLayout>
-    
-    <!-- user password -->
-    <LinearLayout 
-       	android:layout_width="match_parent"
-       	android:layout_height="wrap_content"
-       	android:orientation="horizontal">
-	   
-		<TextView
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/password"
-		    android:layout_weight="0.75"/>
-		
-		<EditText
-		    android:id="@+id/userPWEditText"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="0.25"
-		    android:inputType="textPassword"/>
-       
-    </LinearLayout>
-    
-    <LinearLayout 
-       	android:layout_width="match_parent"
-       	android:layout_height="wrap_content"
-       	android:orientation="horizontal">
-	   
-		<TextView
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/confirmPassword"
-		    android:layout_weight="0.75"/>
-		
-		<EditText
-		    android:id="@+id/confirmPWEditText"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:inputType="textPassword"
-		    android:layout_weight="0.25"/>
-       
-    </LinearLayout>
-    
-    <!-- SSID -->
-    <LinearLayout 
-       	android:layout_width="match_parent"
-       	android:layout_height="wrap_content"
-       	android:orientation="horizontal">
-	   
-		<TextView
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/ssid"
-		    android:layout_weight="0.75"/>
-		
-		<EditText
-		    android:id="@+id/ssidEditText"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:inputType="text"
-		    android:layout_weight="0.25"/>
-       
-    </LinearLayout>
-    
-    <!-- wifi password -->
-    <LinearLayout 
-       	android:layout_width="match_parent"
-       	android:layout_height="wrap_content"
-       	android:orientation="horizontal">
-	   
-		<TextView
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/key"
-		    android:layout_weight="0.75"/>
-		
-		<EditText
-		    android:id="@+id/wifiPWEditText"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="0.25"
-		    android:inputType="textPassword"/>
-       
-    </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/showPWCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="@string/showKey" />
-    
-    <!-- save and restore -->
-    <LinearLayout 
-       	android:layout_width="match_parent"
-       	android:layout_height="wrap_content"
-       	android:orientation="horizontal">
-	   
-        <Button
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/save"
-		    android:layout_weight="0.5"
-		    android:onClick="save"/>
-        
-		<Button
-		    android:id="@+id/BtnRestoreSettings"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/restore"
-		    android:layout_weight="0.5"
-		    android:onClick="restore"/>
-       
-    </LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/scrollView1"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" >
 
-    <Button
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	    
+	    <TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/settings"
+			android:layout_gravity="center"
+			android:padding="10sp"
+			android:textAppearance="?android:attr/textAppearanceLarge"/>
+	    
+	    <!-- username -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/username"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/userNameEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:inputType="text"
+			    android:layout_weight="0.25"/>
+	       
+	    </LinearLayout>
+	    
+	    <!-- user password -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/password"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/userPWEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.25"
+			    android:inputType="textPassword"/>
+	       
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/confirmPassword"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/confirmPWEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:inputType="textPassword"
+			    android:layout_weight="0.25"/>
+	       
+	    </LinearLayout>
+	    
+	    <!-- SSID -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/ssid"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/ssidEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:inputType="text"
+			    android:layout_weight="0.25"/>
+	       
+	    </LinearLayout>
+	    
+	    <!-- wifi password -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/key"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/wifiPWEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.25"
+			    android:inputType="textPassword"/>
+	       
+	    </LinearLayout>
+	
+	
+	
+	    <CheckBox
+	        android:id="@+id/showPWCheckBox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right"
+	        android:text="@string/showKey" />
+	    
+	    <!-- save and restore -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+	        <Button
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/save"
+			    android:layout_weight="0.5"
+			    android:onClick="save"/>
+	        
+			<Button
+			    android:id="@+id/BtnRestoreSettings"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/restore"
+			    android:layout_weight="0.5"
+			    android:onClick="restore"/>
+	       
+	    </LinearLayout>
+	
+		<!-- Calibration -->
+	    <TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/calibration"
+			android:layout_gravity="center"
+			android:paddingTop="10sp"
+			android:padding="10sp"
+			android:textAppearance="?android:attr/textAppearanceLarge"/>
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+	        
+	         <TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/min"
+			    android:layout_weight="0.25"/>
+	    
+		    <TextView
+		        android:id="@+id/minimumTV"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.25"/>
+		    
+		    <TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/max"
+			    android:layout_weight="0.25"/>
+	    
+		    <TextView
+		        android:id="@+id/maximumTV"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="0.25"/>
+	        
+	    </LinearLayout>
+	    
+	    <Button
 		    android:layout_width="fill_parent"
+		    android:layout_marginTop="5sp"
 		    android:layout_height="0dip"
 		    android:text="@string/calibrate"
 		    android:layout_weight="0.5"
 		    android:onClick="calibrate"/>
+	    
+	</LinearLayout>
     
-</LinearLayout>
+</ScrollView>

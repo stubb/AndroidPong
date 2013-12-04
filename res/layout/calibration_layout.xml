@@ -3,33 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
+	
+    <com.androidplot.xy.XYPlot
+		android:id="@+id/aprHistoryPlot"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="0.9"
+		android:layout_marginTop="10px"
+		android:layout_marginLeft="10px"
+		android:layout_marginRight="10px"
+		
+		title="A/P/R History"/>
+        
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/min"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"/>
-    
-    <TextView
-        android:id="@+id/calibrateMinimum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/max"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"/>
-    
-    <TextView
-        android:id="@+id/calibrateMaximum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_weight="0.1"
+        android:text="@string/calibrate"
+        android:onClick="runCalibration" />
 
 </LinearLayout>
