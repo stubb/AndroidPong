@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Vector;
 
 import constants.Values;
 import android.net.wifi.WifiConfiguration;
@@ -34,15 +35,17 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	String temp_text = "";
 	
+	Vector<Integer> data = new Vector<Integer>();
+	
 	/**
 	 * Thread for handling network stuff.
 	 */
 	Thread netz_thread = new Thread() {
-			public void run() {
+		public void run() {
 				try {
 					
 					while(true){
-						byte[] message = new byte[1500];
+						byte[] message = new byte[2];
 						DatagramPacket p = new DatagramPacket(message, message.length);
 						DatagramSocket s = new DatagramSocket(Values.SERVER_PORT);
 						if(isInterrupted()) {
@@ -51,8 +54,14 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 						}
 						if(!s.isClosed()){
 							s.receive(p);
-						}
-						temp_text = new String(message, 0, p.getLength());
+						}				
+
+						int sum = (message[1] & 0xFF) << 8;		
+						sum |= (message[0] & 0xFF);
+						System.out.println("sum: " + sum);
+						
+						data.add(Integer.valueOf(sum));
+						
 						if(!s.isClosed()){
 							s.close();
 						}					
@@ -77,6 +86,11 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.checkForSettings();
 		this.enableHotspot();
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
 		if(!netz_thread.isAlive()) {
 			netz_thread.start();
 		}
