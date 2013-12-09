@@ -89,5 +89,25 @@ public class Connector {
 	public Integer getLastData() {
 		return data.lastElement();
 	}
+	
+	public Integer getMax() {
+		Integer max = Integer.MIN_VALUE;
+		for (Integer curr : data) {
+	        if (curr > max) {
+	            max = curr;
+	        }
+	    }
+		return max;
+	}
+	
+	public Integer getMin() {
+		Integer min = Integer.MAX_VALUE;
+		for (Integer curr : data) {
+	        if (curr < min) {
+	            min = curr;
+	        }
+	    }
+		return min;
+	}
 
 }
