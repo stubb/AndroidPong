@@ -7,12 +7,7 @@ import android.os.SystemClock;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
-  
-	/**
-	 * The tag is used to identify the class while logging
-	 */
-	private final String LOGTAG = getClass().getName();
-  
+
 	/**
 	 * Handle to the surface manager object we interact with
 	 */

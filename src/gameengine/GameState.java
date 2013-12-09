@@ -36,14 +36,15 @@ public class GameState {
 	private int p1_score;
 	private int p2_score;
 
-	//The ball
+	// Spielball.
 	private int ballSize = 10;
 	private int ballX = 100;
 	private int ballY = 100;
 	private int angle = 45;
 	private int ballSpeed = 0;
-	private int ballSpeedX;
-	private int ballSpeedY;
+	
+	// Hilfsvariablen.
+	private boolean p1_kolli;
 	
 	public GameState(Point screenSize, String gameMode)
 	{
@@ -68,8 +69,7 @@ public class GameState {
 		
 		batSpeed = multiplicator;
 		ballSpeed = multiplicator / 2;
-		ballSpeedX = multiplicator / 5;
-		ballSpeedY = multiplicator / 5;
+		p1_kolli = false;
 		
 		p1_score = 0;
 		p2_score = 0;
@@ -82,12 +82,7 @@ public class GameState {
 	}
 	
 	private boolean gameRunning() {
-		if (p2_score == 20) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return p2_score == 20 ? false : true;
 	}
 	
 	//The update method
@@ -96,6 +91,14 @@ public class GameState {
 		ballX += Math.round((Math.cos(Math.toRadians(angle)))) * ballSpeed;
 		ballY += Math.round((Math.sin(Math.toRadians(angle)) * -1)) * ballSpeed;
 
+		playerDeath();
+		
+		kollision();
+
+		return gameRunning();
+	}
+	
+	private void playerDeath() {
 		// ===============
 		// Player 2 Death.
 		// ===============
@@ -107,15 +110,18 @@ public class GameState {
 		// ===============
 		// Player 1 Death.
 		// ===============
-		if (ballY + ballSize / 2 >= screenHeight) {
+		if (ballY + ballSize >= screenHeight) {
 			p2_score += 1;
 			resetBall();
 		}
-		
+	}
+	
+	private void kollision() {
 		// ================
 		// Seitenkollision.
 		// ================
 		if (ballX - ballSize <= 0 || ballX + ballSize >= screenWidth) {
+			p1_kolli = false;
 			winkel(0);
 		}
 		
@@ -123,22 +129,27 @@ public class GameState {
 		// Kollision mit Player 1.
 		// =======================
 		// Regulaere Kollision.
-		if (ballY + ballSize >= p1_batY && (ballX - ballSize >= p1_batX && ballX + ballSize <= p1_batX + p1_batLength)) {
+		if (!p1_kolli && ballY + ballSize >= p1_batY && (ballX - ballSize >= p1_batX && ballX + ballSize <= p1_batX + p1_batLength)) {
+			p1_kolli = true;
 			winkel(180);
 		}
 		// Kollision mit oberen Teil von Schlaeger.
-		else if (ballY + ballSize >= p1_batY && ballY + ballSize < p1_batY + p1_batHeight) {
+		else if (!p1_kolli && ballY + ballSize >= p1_batY && ballY + ballSize < p1_batY + p1_batHeight) {
 			if (ballX + ballSize >= p1_batX && ballX - ballSize <= p1_batX) {
+				p1_kolli = true;
 				winkel(270);
 			} else if (ballX + ballSize >= p1_batX + p1_batLength && ballX - ballSize <= p1_batX + p1_batLength) {
+				p1_kolli = true;
 				winkel(90);
 			}
 		}
 		// Kollision mit unterem Teil von Schlaeger.
-		else if (ballY + ballSize >= p1_batY + p1_batHeight) {
+		else if (!p1_kolli && ballY + ballSize >= p1_batY + p1_batHeight) {
 			if (ballX + ballSize >= p1_batX && ballX - ballSize <= p1_batX) {
+				p1_kolli = true;
 				winkel(0);
 			} else if (ballX + ballSize >= p1_batX + p1_batLength && ballX - ballSize <= p1_batX + p1_batLength) {
+				p1_kolli = true;
 				winkel(0);
 			}
 		}
@@ -147,15 +158,15 @@ public class GameState {
 		// Kollision mit Player 2.
 		// =======================
 		if (ballY - ballSize <= p2_batY + p2_batHeight && (ballX - ballSize >= p2_batX && ballX + ballSize <= p2_batX + p2_batLength)) {
+			p1_kolli = false;
 			winkel(180);
-		}
-
-		return gameRunning();
+		}	
 	}
 	
 	private void resetBall() {
 		ballX = screenWidth / 2;
 		ballY = screenHeight / 2;
+		p1_kolli = false;
 	}
 	
 	private void winkel(int add) {

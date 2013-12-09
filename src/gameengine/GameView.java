@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -13,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-import android.app.Activity;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
