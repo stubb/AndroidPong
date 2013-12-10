@@ -86,7 +86,9 @@ public class GameState {
 	}
 	
 	//The update method
-	public boolean update() {
+	public boolean update(Integer data) {
+		
+		System.out.println(Integer.toString(data));
 
 		ballX += Math.round((Math.cos(Math.toRadians(angle)))) * ballSpeed;
 		ballY += Math.round((Math.sin(Math.toRadians(angle)) * -1)) * ballSpeed;

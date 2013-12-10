@@ -6,6 +6,9 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Vector;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import constants.Values;
 
 public class Connector {
@@ -13,7 +16,7 @@ public class Connector {
 	private static Connector instance = null;
 
 	public Vector<Integer> data = new Vector<Integer>();
-
+	
 	/**
 	 * Thread for handling network stuff.
 	 */
@@ -22,8 +25,9 @@ public class Connector {
 	private Connector() {
 		networkThread = new Thread() {
 			public void run() {
-				try {
+				
 					while (true) {
+						try {
 						byte[] message = new byte[2];
 						DatagramPacket p = new DatagramPacket(message,
 								message.length);
@@ -40,24 +44,46 @@ public class Connector {
 						int sum = (message[1] & 0xFF) << 8;
 						sum |= (message[0] & 0xFF);
 						System.out.println("sum: " + sum);
-
+						
+						// store data
 						data.add(Integer.valueOf(sum));
+						
+						// send data to gamethread
+						Message msg = Message.obtain();
+						msg.what = 999;
+						msg.obj = sum;
+						gameengine.GameThread.msgHandler.sendMessage(new Message());
+						
 
 						if (!s.isClosed()) {
 							s.close();
 						}
-					}
+					
 				} catch (SocketException e) {
-					// TODO Auto-generated catch block
+					// TODO this sends trashvalues ...
+					// send data to gamethread
+					Message msg = Message.obtain();
+					msg.what = 999;
+					msg.obj = 1;
+					gameengine.GameThread.msgHandler.sendMessage(new Message());
 					e.printStackTrace();
 				} catch (IOException e) {
+					Message msg = Message.obtain();
+					msg.what = 999;
+					msg.obj = 2;
+					gameengine.GameThread.msgHandler.sendMessage(new Message());
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InterruptedException e) {
+					Message msg = Message.obtain();
+					msg.what = 999;
+					msg.obj = 3;
+					gameengine.GameThread.msgHandler.sendMessage(new Message());
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
+		}
 		};
 
 	}

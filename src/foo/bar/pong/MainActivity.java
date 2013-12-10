@@ -29,6 +29,8 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	private SharedPreferences settings;
 	
+	private boolean hotspotWorks = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +43,13 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		Connector.getInstance().startConnection();
+	//	if (hotspotWorks) {
+		//	Log.d(LOGTAG, "NETWORK CONNECTION");
+			Connector.getInstance().startConnection();
+	/*	}
+		else {
+			Log.d(LOGTAG, "NO NETWORK CONNECTION");
+		}*/
 	}
 	
 	@Override
@@ -138,6 +146,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 		    try {
 		      method.invoke(wifi, netConfig,true);
+		      hotspotWorks = true;
 		    } catch (IllegalArgumentException e) {
 		      e.printStackTrace();
 		    } catch (IllegalAccessException e) {
@@ -168,6 +177,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	                }
 	            }
 	        }
+	        hotspotWorks = false;
 	    }
 	    catch(Exception e)
 	    {

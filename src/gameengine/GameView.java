@@ -18,6 +18,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     
    private GameThread _thread;
    private Context ctx;
+   public static Handler msgHandler;
 
    public GameView(Context context, AttributeSet attrs) {
        super(context, attrs);
@@ -28,9 +29,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
        //setFocusable(true); 
        requestFocus();
        setFocusableInTouchMode(true);
+       msgHandler = new Handler();
        final SharedPreferences settings = ctx.getSharedPreferences(Values.CONFIG, ctx.MODE_PRIVATE);
        //and instantiate the thread
-       _thread = new GameThread(holder, new Handler(), getScreensize(), settings.getString(Values.GAME_MODE, "normal"));
+       _thread = new GameThread(holder, msgHandler, getScreensize(), settings.getString(Values.GAME_MODE, "normal"));
    }  
 
    @Override
