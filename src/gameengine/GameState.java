@@ -1,5 +1,8 @@
 package gameengine;
 
+import java.sql.Connection;
+
+import singleton.Connector;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -87,6 +90,7 @@ public class GameState {
 	
 	//The update method
 	public boolean update() {
+		p1_batX = singleton.Connector.getInstance().getData();
 
 		ballX += Math.round((Math.cos(Math.toRadians(angle)))) * ballSpeed;
 		ballY += Math.round((Math.sin(Math.toRadians(angle)) * -1)) * ballSpeed;
