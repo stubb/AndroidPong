@@ -91,6 +91,10 @@ public class GameState {
 	//The update method
 	public boolean update() {
 		p1_batX = singleton.Connector.getInstance().getData();
+		if (p1_batX < 0)
+			p1_batX = 0;
+		else if (p1_batX + p1_batLength > screenWidth)
+			p1_batX = screenWidth - p1_batLength;
 
 		ballX += Math.round((Math.cos(Math.toRadians(angle)))) * ballSpeed;
 		ballY += Math.round((Math.sin(Math.toRadians(angle)) * -1)) * ballSpeed;
