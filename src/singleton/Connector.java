@@ -12,7 +12,7 @@ public class Connector {
 
 	private static Connector instance = null;
 
-	public Vector<Integer> data = new Vector<Integer>();
+	public Integer data = 0;
 
 	/**
 	 * Thread for handling network stuff.
@@ -41,7 +41,7 @@ public class Connector {
 						sum |= (message[0] & 0xFF);
 						System.out.println("sum: " + sum);
 
-						data.add(Integer.valueOf(sum));
+						data = Integer.valueOf(sum);
 
 						if (!s.isClosed()) {
 							s.close();
@@ -86,28 +86,8 @@ public class Connector {
 		}
 	}
 	
-	public Integer getLastData() {
-		return data.lastElement();
-	}
-	
-	public Integer getMax() {
-		Integer max = Integer.MIN_VALUE;
-		for (Integer curr : data) {
-	        if (curr > max) {
-	            max = curr;
-	        }
-	    }
-		return max;
-	}
-	
-	public Integer getMin() {
-		Integer min = Integer.MAX_VALUE;
-		for (Integer curr : data) {
-	        if (curr < min) {
-	            min = curr;
-	        }
-	    }
-		return min;
+	public Integer getData() {
+		return data;
 	}
 
 }
