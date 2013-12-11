@@ -12,7 +12,7 @@ public class Connector {
 
 	private static Connector instance = null;
 
-	public Integer data = 0;
+	private Integer data = 0;
 
 	/**
 	 * Thread for handling network stuff.

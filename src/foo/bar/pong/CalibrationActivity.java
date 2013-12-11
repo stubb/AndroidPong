@@ -18,6 +18,8 @@ import com.androidplot.util.PixelUtils;
 import com.androidplot.util.PlotStatistics;
 import com.androidplot.xy.*;
 
+import foo.bar.pong.util.CollectDataThread;
+
 public class CalibrationActivity extends Activity {
 	
 	private static final int HISTORY_SIZE = 20;            // number of points to plot in history
@@ -39,7 +41,6 @@ public class CalibrationActivity extends Activity {
 		setContentView(R.layout.calibration_layout);
 		
         this.createPlot();
-        fillPlot();
 	}
 	
 	public void createPlot() {
@@ -75,56 +76,10 @@ public class CalibrationActivity extends Activity {
         		PixelUtils.dpToPix(16));
 	}
 	
-	public synchronized void fillPlot()	{
-		 int[] test0 = {100,200,300,400,42,100,700,851,912,192,931, 
-		               100,200,300,400,42,100,700,851,912,192};
-		 int[] test1 = {500,100,400,200,420,10,70,51,912,192,931, 
-	               10,20,30,40,42,10,70,851,92,912};
-		 for(int i=0; i<test0.length; i++) {
-			 minMuscleSeries.addLast(null, test0[i]);
-			 maxMuscleSeries.addLast(null, test1[i]);
-			 musclePlot.redraw();
-		 } 
-	}
-	
 	public synchronized void runCalibration(View view) {
-//		((LinearLayout) findViewById(R.id.calibrationInPorgressLayout)).
-//			setVisibility(View.VISIBLE);
-//		this.startCalibration(false);
-//		this.startCalibration(true);
-//		this.writeCalibratedValues();
-//		((LinearLayout) findViewById(R.id.calibrationInPorgressLayout)).
-//			setVisibility(View.GONE);
-	}
-	
-	private synchronized void startCalibration(boolean max) {
-		Integer[] results = new Integer[10];
-		for(int i=0; i<10; i++) {
-			results[i] = calibrate(max);
-			System.out.println("Debug: "+results[i]);
-			try {
-				wait(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		if(max) {
-			this.max = this.getAverage(results);
-			this.maxTV.setText(String.valueOf(this.max));
-		}
-		else {
-			this.min = this.getAverage(results);
-			this.minTV.setText(String.valueOf(this.min));
-		}
-	}
-	
-	private int calibrate(boolean max) {
-		if(max) {
-			return Connector.getInstance().getMax();
-		}
-		else {
-			return Connector.getInstance().getMin();
-		}
+		CollectDataThread collector = new CollectDataThread(musclePlot);
+		collector.start();
+		collector.interrupt();
 	}
 	
 	private int getAverage(Integer[] values) {

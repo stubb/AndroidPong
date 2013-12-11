@@ -120,54 +120,9 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		this.data[Values.POS_WIFI_PW].invalidate();
 	}
 	
-	public synchronized void runCalibration(View view) {
+	public void runCalibration(View view) {
 		Intent intent = new Intent(this, CalibrationActivity.class);
         this.startActivityForResult(intent,REQUEST_CALIBRATION);
-	}
-	
-	private synchronized void startCalibration(boolean max) {
-		Integer[] results = new Integer[10];
-		for(int i=0; i<10; i++) {
-			results[i] = calibrate(max);
-			System.out.println("Debug: "+results[i]);
-			try {
-				wait(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		if(max) {
-			this.max = this.getAverage(results);
-			this.maxTV.setText(String.valueOf(this.max));
-		}
-		else {
-			this.min = this.getAverage(results);
-			this.minTV.setText(String.valueOf(this.min));
-		}
-	}
-	
-	private int calibrate(boolean max) {
-		if(max) {
-			return Connector.getInstance().getMax();
-		}
-		else {
-			return Connector.getInstance().getMin();
-		}
-	}
-	
-	private int getAverage(Integer[] values) {
-		int sum = 0;
-		for(int i=0; i<values.length; i++) {
-			sum += values[i];
-		}
-		return (Math.round(sum/values.length));
-	}
-	
-	private void writeCalibratedValues() {
-		Editor editor = this.settings.edit();
-		editor.putInt(Values.CALIBRATED_MIN_VAL, this.min);
-		editor.putInt(Values.CALIBRATED_MAX_VAL, this.max);
-		editor.commit();
 	}
 	
 	@Override
