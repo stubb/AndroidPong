@@ -33,6 +33,7 @@
         <activity android:name="GameActivity"></activity>
         <activity android:name="SettingsActivity"/>
         <activity android:name="CalibrationActivity"/>
+        <activity android:name="StatisticsActivity"/>
     </application>
 
 </manifest>

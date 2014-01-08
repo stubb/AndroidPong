@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import singleton.Connector;
 import constants.Values;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.Toast;
+import android.net.NetworkInfo;
 
 public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
@@ -91,6 +93,16 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 
 	public void showStats(View view) {
+		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+		if (activeNetwork != null && activeNetwork.isConnected()) {
+		    //notify user you are online
+			Intent intent = new Intent(this, StatisticsActivity.class);
+			startActivity(intent);
+		} else {
+		    //notify user you are not online
+			Toast.makeText(this, "Keine Internevtverbindung\n Daten nicht abrufbar!", Toast.LENGTH_LONG).show();
+		} 
 	}
 	
 	@Override
