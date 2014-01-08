@@ -12,7 +12,7 @@
         android:adjustViewBounds="true"
         android:maxHeight="100sp"
         android:maxWidth="100sp"
-        android:src="@drawable/pipboy" />
+        android:src="@drawable/musclerecoveryicon" />
 
     <TextView
         android:id="@+id/textView2"
