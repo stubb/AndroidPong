@@ -12,7 +12,8 @@
         android:adjustViewBounds="true"
         android:maxHeight="100sp"
         android:maxWidth="100sp"
-        android:src="@drawable/musclerecoveryicon" />
+        android:src="@drawable/musclerecoveryicon"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:id="@+id/textView2"
@@ -22,21 +23,27 @@
         android:layout_toRightOf="@id/iconBigImg"
         android:textAppearance="?android:attr/textAppearanceLarge"
 		android:textSize="30sp"
+		android:gravity="center"
         android:text="@string/app_name" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    
     <Button
         android:id="@+id/normalModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iconBigImg"
+        android:layout_marginTop="120dp"
         android:onClick="startNormalModeGame"
         android:text="@string/normalModePlay" />
-
+        
     <Button
         android:id="@+id/expertModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/normalModePlayBtn"
         android:onClick="startExpertModeGame"
         android:text="@string/expertModePlay" />
 
@@ -44,7 +51,6 @@
         android:id="@+id/trainingsModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/expertModePlayBtn"
         android:onClick="startTrainingsModeGame"
         android:text="@string/trainingsModePlay" />
 
@@ -52,8 +58,12 @@
         android:id="@+id/statsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/trainingsModePlayBtn"
         android:onClick="showStats"
         android:text="@string/stats" />
+
+
+
+
+    </LinearLayout>
 
 </RelativeLayout>
