@@ -1,5 +1,7 @@
 package foo.bar.pong;
 
+import java.util.TimerTask;
+
 import constants.Values;
 import singleton.Connector;
 import android.app.Activity;
@@ -76,10 +78,21 @@ public class CalibrationActivity extends Activity {
         		PixelUtils.dpToPix(16));
 	}
 	
-	public synchronized void runCalibration(View view) {
-		CollectDataThread collector = new CollectDataThread(musclePlot);
-		collector.start();
-		collector.interrupt();
+	public void runCalibration(View view) {
+//		CollectDataThread collector = new CollectDataThread(musclePlot, minMuscleSeries,
+//				maxMuscleSeries);
+//		collector.run();
+		
+		TimerTask t = new TimerTask() {
+			
+			private int test = 5;
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
 	}
 	
 	private int getAverage(Integer[] values) {
