@@ -81,7 +81,7 @@ public class Connector {
 	}
 	
 	public void startConnection() {
-		if(!networkThread.isAlive()) {
+		if(networkThread != null && !networkThread.isAlive()) {
 			networkThread.start();
 		}
 	}
