@@ -10,10 +10,16 @@ import constants.Values;
 
 public class Connector {
 
+	private static int RANGE_MIN = 1;
+	private static int RANGE_MAX = 50;
+	
 	private static Connector instance = null;
 
 	private Integer data = 0;
 
+	private int minimum;
+	private int maximum;
+	
 	/**
 	 * Thread for handling network stuff.
 	 */
@@ -62,6 +68,22 @@ public class Connector {
 
 	}
 
+	public int getMinimum() {
+		return minimum;
+	}
+
+	public void setMinimum(int minimum) {
+		this.minimum = minimum;
+	}
+
+	public int getMaximum() {
+		return maximum;
+	}
+
+	public void setMaximum(int maximum) {
+		this.maximum = maximum;
+	}
+	
 	public static Connector getInstance() {
 		if (instance == null) {
 			instance = new Connector();
@@ -88,6 +110,11 @@ public class Connector {
 	
 	public Integer getData() {
 		return data;
+	}
+	
+	public int getMappedData() {
+		return (this.data-this.minimum)/(this.maximum-this.minimum)
+				*(RANGE_MAX-RANGE_MIN)+RANGE_MIN;
 	}
 
 }
