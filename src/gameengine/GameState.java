@@ -90,7 +90,7 @@ public class GameState {
 	
 	//The update method
 	public boolean update() {
-		p1_batX = singleton.Connector.getInstance().getData();
+		p1_batX = singleton.Connector.getInstance().getMappedData();
 		if (p1_batX < 0)
 			p1_batX = 0;
 		else if (p1_batX + p1_batLength > screenWidth)
@@ -104,6 +104,10 @@ public class GameState {
 		collisionCheck();
 		
 		game.update();
+		
+		if (game.expertTime()) {
+			ballSpeed *= 2;
+		}
 
 		return gameRunning();
 	}
@@ -253,7 +257,7 @@ public class GameState {
 		if (game.getGameMode().equals("normal")) {
 			canvas.drawText(Integer.toString(game.p2_getScore()), 0.85f * screenWidth, 0.4f * screenHeight + 4 * multiplicator, paint);	
 		}
-		if (game.getGameMode().equals("training")) {
+		if (game.getGameMode().equals("training") || game.getGameMode().equals("expert")) {
 			int seconds = (int) (game.getGameTime() / 1000) % 60 ;
 			int minutes = (int) ((game.getGameTime() / (1000*60)) % 60);
 			canvas.drawText(String.format("%02d:%02d", minutes, seconds), 

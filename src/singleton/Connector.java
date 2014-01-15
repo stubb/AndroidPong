@@ -113,8 +113,11 @@ public class Connector {
 	}
 	
 	public int getMappedData() {
-		return (this.data-this.minimum)/(this.maximum-this.minimum)
-				*(RANGE_MAX-RANGE_MIN)+RANGE_MIN;
+		int mappedData = 0;
+		if (this.maximum != 0 && this.minimum != 0) {
+			mappedData = (this.data - this.minimum) / (this.maximum - this.minimum) * (RANGE_MAX - RANGE_MIN) + RANGE_MIN;
+		}
+		return mappedData; 
 	}
 
 }
