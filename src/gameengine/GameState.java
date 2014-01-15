@@ -106,7 +106,7 @@ public class GameState {
 		game.update();
 		
 		if (game.expertTime()) {
-			ballSpeed *= 2;
+			ballSpeed *= 1.3;
 		}
 
 		return gameRunning();

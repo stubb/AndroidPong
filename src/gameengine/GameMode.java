@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class GameMode {
 	
-	private final int MATCHPOINTS = 11; 
+	private final int MATCHPOINTS = 11;
+	private final int SECONDSTOEXPERT = 30;
 
 	// Spielstaende.
 	private int p1_score;
@@ -16,6 +17,7 @@ public class GameMode {
 	// Spielzeit.
 	private Date gameTimeStart;
 	private Date gameTimeCurrent;
+	private long lastSecond;
 	
 	// Spielmodus.
 	private String gameMode;
@@ -36,12 +38,21 @@ public class GameMode {
 		gameTimeCurrent = new Date();
 	}
 	
+	public boolean expertTime() {
+		long messwert = (gameTimeCurrent.getTime() - gameTimeStart.getTime()) / 1000;
+		if (messwert % SECONDSTOEXPERT == 0 && messwert > lastSecond) {
+			lastSecond = messwert;
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean checkVictory() {
 		if (gameMode.equals("normal")) {
-			return p2_score == 11 ? false : true;
+			return p2_score == MATCHPOINTS ? false : true;
 		}
 		if (gameMode.equals("expert")) {
-			return p2_score > 0 ? false : true;
+			return p2_score > 1 ? false : true;
 		}
 		if (gameMode.equals("training")) {
 			// Milliseconds als Differenz.
