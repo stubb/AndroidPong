@@ -1,7 +1,10 @@
 package gameengine;
 
 import java.sql.Connection;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
+import constants.Values;
 import singleton.Connector;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +15,9 @@ import android.graphics.Rect;
 import android.view.KeyEvent;
 
 public class GameState {
+	
+	// Objekt mit Logik der Spielmodi.
+	private GameMode game;
 	
 	// Bildschirmgroessen.
 	private int screenWidth;
@@ -34,10 +40,6 @@ public class GameState {
 	
 	// Schlaeger Bewegungsgeschwindigkeit.
 	private int batSpeed;
-	
-	// Spielstaende.
-	private int p1_score;
-	private int p2_score;
 
 	// Spielball.
 	private int ballSize = 10;
@@ -52,6 +54,7 @@ public class GameState {
 	public GameState(Point screenSize, String gameMode)
 	{
 		setScreenDimensions(screenSize);
+		game = new GameMode(gameMode);
 		
 		// multiplicator wird auf 2% der Bildschirmhoehe (lange Seite) festgelegt.
 		multiplicator = (int)(screenWidth * 0.02);
@@ -72,10 +75,7 @@ public class GameState {
 		
 		batSpeed = multiplicator;
 		ballSpeed = multiplicator / 2;
-		p1_kolli = false;
-		
-		p1_score = 0;
-		p2_score = 0;
+		p1_kolli = false;		
 		
 	}
 
@@ -85,7 +85,7 @@ public class GameState {
 	}
 	
 	private boolean gameRunning() {
-		return p2_score == 20 ? false : true;
+		return game.checkVictory();
 	}
 	
 	//The update method
@@ -99,19 +99,21 @@ public class GameState {
 		ballX += Math.round((Math.cos(Math.toRadians(angle)))) * ballSpeed;
 		ballY += Math.round((Math.sin(Math.toRadians(angle)) * -1)) * ballSpeed;
 
-		playerDeath();
+		playerDeathCheck();
 		
-		kollision();
+		collisionCheck();
+		
+		game.update();
 
 		return gameRunning();
 	}
 	
-	private void playerDeath() {
+	private void playerDeathCheck() {
 		// ===============
 		// Player 2 Death.
 		// ===============
 		if (ballY <= 0) {
-			p1_score += 1;
+			game.p2_death();
 			resetBall();
 		}
 		
@@ -119,12 +121,12 @@ public class GameState {
 		// Player 1 Death.
 		// ===============
 		if (ballY + ballSize >= screenHeight) {
-			p2_score += 1;
+			game.p1_death();
 			resetBall();
 		}
 	}
 	
-	private void kollision() {
+	private void collisionCheck() {
 		// ================
 		// Seitenkollision.
 		// ================
@@ -140,15 +142,18 @@ public class GameState {
 		if (!p1_kolli && ballY + ballSize >= p1_batY && (ballX - ballSize >= p1_batX && ballX + ballSize <= p1_batX + p1_batLength)) {
 			p1_kolli = true;
 			winkel(180);
+			game.p1_return();
 		}
 		// Kollision mit oberen Teil von Schlaeger.
 		else if (!p1_kolli && ballY + ballSize >= p1_batY && ballY + ballSize < p1_batY + p1_batHeight) {
 			if (ballX + ballSize >= p1_batX && ballX - ballSize <= p1_batX) {
 				p1_kolli = true;
 				winkel(270);
+				game.p1_return();
 			} else if (ballX + ballSize >= p1_batX + p1_batLength && ballX - ballSize <= p1_batX + p1_batLength) {
 				p1_kolli = true;
 				winkel(90);
+				game.p1_return();
 			}
 		}
 		// Kollision mit unterem Teil von Schlaeger.
@@ -156,9 +161,11 @@ public class GameState {
 			if (ballX + ballSize >= p1_batX && ballX - ballSize <= p1_batX) {
 				p1_kolli = true;
 				winkel(0);
+				game.p1_return();
 			} else if (ballX + ballSize >= p1_batX + p1_batLength && ballX - ballSize <= p1_batX + p1_batLength) {
 				p1_kolli = true;
 				winkel(0);
+				game.p1_return();
 			}
 		}
 		
@@ -167,6 +174,7 @@ public class GameState {
 		// =======================
 		if (ballY - ballSize <= p2_batY + p2_batHeight && (ballX - ballSize >= p2_batX && ballX + ballSize <= p2_batX + p2_batLength)) {
 			p1_kolli = false;
+			game.p2_return();
 			winkel(180);
 		}	
 	}
@@ -177,6 +185,7 @@ public class GameState {
 		p1_kolli = false;
 	}
 	
+	// DONE
 	private void winkel(int add) {
 		angle += add;
 		if (angle >= 360)
@@ -238,12 +247,20 @@ public class GameState {
 		paint.setTextSize(5 * multiplicator);
 		
 		// Player 1
-		canvas.drawText(Integer.toString(p1_score), 0.85f * screenWidth, 0.6f * screenHeight, paint);
+		//canvas.drawText(Integer.toString(game.p1_getScore()), 0.85f * screenWidth, 0.6f * screenHeight, paint);
 		
 		// Player 2
-		canvas.drawText(Integer.toString(p2_score), 0.85f * screenWidth, 0.4f * screenHeight + 4 * multiplicator, paint);
+		if (game.getGameMode().equals("normal")) {
+			canvas.drawText(Integer.toString(game.p2_getScore()), 0.85f * screenWidth, 0.4f * screenHeight + 4 * multiplicator, paint);	
+		}
+		if (game.getGameMode().equals("training")) {
+			int seconds = (int) (game.getGameTime() / 1000) % 60 ;
+			int minutes = (int) ((game.getGameTime() / (1000*60)) % 60);
+			canvas.drawText(String.format("%02d:%02d", minutes, seconds), 
+				0.73f * screenWidth, 0.4f * screenHeight + 4 * multiplicator, paint);
+		}
 		
-		canvas.drawText(Integer.toString(multiplicator), 100, 100, paint);
+		//canvas.drawText(Integer.toString(multiplicator), 100, 100, paint);
 	}
 	// DONE	
 	private void drawPlayerBars(Canvas canvas) {
