@@ -26,7 +26,6 @@ public class CalibrationActivity extends Activity {
 	
 	private TextView minTV;
 	private TextView maxTV;
-	private SharedPreferences settings;
 	private int min;
 	private int max;
 	
@@ -73,24 +72,16 @@ public class CalibrationActivity extends Activity {
 		
 		Timer t = new Timer();
 		this.musclePlot.clear();
-		t.schedule(new CollectDataTimerTask(this.musclePlot, this),
+		CollectDataTimerTask cdtt1 = new CollectDataTimerTask(this.musclePlot,
+				this, true);
+		t.schedule(cdtt1,
 				0,
+				250);
+		CollectDataTimerTask cdtt2 = new CollectDataTimerTask(this.musclePlot,
+				this, false);
+		t.schedule(cdtt2,
+				6000,
 				250);
 	}
 	
-	private int getAverage(Integer[] values) {
-		int sum = 0;
-		for(int i=0; i<values.length; i++) {
-			sum += values[i];
-		}
-		return (Math.round(sum/values.length));
-	}
-	
-	private void writeCalibratedValues() {
-		Editor editor = this.settings.edit();
-		editor.putInt(Values.CALIBRATED_MIN_VAL, this.min);
-		editor.putInt(Values.CALIBRATED_MAX_VAL, this.max);
-		editor.commit();
-	}
-
 }

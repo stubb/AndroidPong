@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.widget.Toast;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -29,15 +28,19 @@ public class CollectDataTimerTask extends TimerTask {
 	private XYPlot plot;
 	private Context context;
 	
+	private boolean minFlag;
 	private int counter = 0;
 	
-	public CollectDataTimerTask(XYPlot plot, Context context) {
+	public CollectDataTimerTask(XYPlot plot, Context context, boolean minFlag) {
 		this.context = context;
 		this.plot = plot;
+		this.minFlag = minFlag;
 		this.minSeries = new SimpleXYSeries("minimum");
 		this.minSeries.useImplicitXVals();
 		this.maxSeries = new SimpleXYSeries("maximum");
 		this.maxSeries.useImplicitXVals();
+		this.min = new ArrayList<Integer>();
+		this.max = new ArrayList<Integer>();
 		plot.addSeries(maxSeries,
         		new LineAndPointFormatter(Color.rgb(0, 255, 0),
         				Color.BLACK, null));
@@ -68,10 +71,7 @@ public class CollectDataTimerTask extends TimerTask {
 	@Override
 	public void run() {
 		int value = Connector.getInstance().getData();
-		if(counter == 0) {
-//			this.buildAlertDialog(true);
-		}
-		if(counter<20) {
+		if(minFlag) {
 			this.minSeries.addLast(null, value);
 			this.min.add(value);
 //			this.minSeries.addLast(null,MIN_TEST[counter]);
@@ -80,20 +80,24 @@ public class CollectDataTimerTask extends TimerTask {
 		else {
 			this.maxSeries.addLast(null, value);
 			this.max.add(value);
-//			this.maxSeries.addLast(null,MAX_TEST[counter-20]);
+//			this.maxSeries.addLast(null,MAX_TEST[counter]);
 //			this.max.add(MAX_TEST[counter]);
 		}
 		this.plot.redraw();
 		counter++;
-		if(counter==40) {
+		if(counter==20) {
 			this.saveConfig();
 			this.cancel();
 		}
 	}
 	
 	private void saveConfig() {
-		Connector.getInstance().setMinimum(this.getMean(this.min));
-		Connector.getInstance().setMaximum(this.getMean(this.max));
+		if(minFlag) {
+			Connector.getInstance().setMinimum(this.getMean(this.min));
+		}
+		else {
+			Connector.getInstance().setMaximum(this.getMean(this.max));
+		}
 	}
 	
 	private int getMean(ArrayList<Integer> values) {
