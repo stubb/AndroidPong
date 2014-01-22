@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,12 @@ import foo.bar.pong.util.CollectDataThread;
 import foo.bar.pong.util.CollectDataTimerTask;
 
 public class CalibrationActivity extends Activity {
+	int[] minValues = {100,200,300,400,42,100,700,851,912,192,931, 
+            100,200,300,400,42,100,700,851,912,192};
+	
+	int[] maxValues = {500,100,400,200,420,10,70,51,912,192,931, 
+     		10,20,30,40,42,10,70,851,92,912};
+	
 	
 	public static int DURATION_MS = 250;
 	
