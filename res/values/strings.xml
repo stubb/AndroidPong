@@ -6,10 +6,10 @@
     <string name="homepage">Visit homepage</string>
     
 	<!-- main menu button titles -->
-	<string name="normalModePlay">Start normal mode game</string>
-	<string name="expertModePlay">Start expert mode game</string>
-	<string name="trainingsModePlay">Start trainings mode game</string>
-	<string name="stats">Statistics</string>
+	<string name="normalModePlay">Start normal game</string>
+	<string name="expertModePlay">Start expert game</string>
+	<string name="trainingsModePlay">Start trainings game</string>
+	<string name="stats">Highscore</string>
 	
 	<!-- settings -->
 	<string name="username">Username:</string>
@@ -25,5 +25,10 @@
 	<string name="min">Minimum</string>
 	<string name="max">Maximum</string>
 	<string name="calibrate">Calibrate</string>
+	
+	<!-- highscore -->
+    <string name="highscore_first_top">Top 10</string>
+    <string name="highscore_second_top">Your Ranking</string>
+<!--     <string name="demo_collection">Demo Collection</string> -->
 
 </resources>

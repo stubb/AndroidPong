@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -13,12 +13,16 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
-	
+
+    <!--         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->	
+<!--     		android:theme="@android:style/Theme.NoTitleBar" -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/musclerecoveryicon"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+        
         <activity
             android:name="foo.bar.pong.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -30,10 +34,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="GameActivity"></activity>
+        <activity android:name="GameActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+        </activity>
         <activity android:name="SettingsActivity"/>
         <activity android:name="CalibrationActivity"/>
         <activity android:name="StatisticsActivity"/>
+        <activity android:name="HighscoreActivity"/>
     </application>
 
 </manifest>
