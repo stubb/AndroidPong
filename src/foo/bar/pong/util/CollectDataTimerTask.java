@@ -4,35 +4,43 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 
 import singleton.Connector;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.database.CursorJoiner.Result;
 import android.graphics.Color;
+import android.os.Handler;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 
+import constants.Values;
+
 public class CollectDataTimerTask extends TimerTask {
 
-	public static int[] MIN_TEST = {100,200,300,400,42,100,700,851,912,192,931, 
-            100,200,300,400,42,100,700,851,912,192};
+	public static int[] MIN_TEST = {10,20,30,40,4,10,70,85,91,19,93, 
+            10,20,30,00,42,10,70,85,92,19};
 	
 	public static int[] MAX_TEST = {500,100,400,200,420,10,70,51,912,192,931, 
      		10,20,30,40,42,10,70,851,92,912};
 	
+	private Activity activity;
+	private SharedPreferences settings;	
 	private ArrayList<Integer> min;
 	private ArrayList<Integer> max;
 	private SimpleXYSeries minSeries;
 	private SimpleXYSeries maxSeries;
 	private XYPlot plot;
-	private Context context;
 	
 	private boolean minFlag;
 	private int counter = 0;
 	
-	public CollectDataTimerTask(XYPlot plot, Context context, boolean minFlag) {
-		this.context = context;
+	public CollectDataTimerTask(XYPlot plot, boolean minFlag, Activity activity) {
+		this.activity = activity;
+		this.settings = this.activity.getSharedPreferences(Values.CONFIG,
+				Activity.MODE_PRIVATE);
 		this.plot = plot;
 		this.minFlag = minFlag;
 		this.minSeries = new SimpleXYSeries("minimum");
@@ -46,32 +54,14 @@ public class CollectDataTimerTask extends TimerTask {
         				Color.BLACK, null));
 		plot.addSeries(minSeries,
         		new LineAndPointFormatter(Color.rgb(255, 0, 0),
-        				Color.WHITE, null));
-		
-	}
-	
-	private AlertDialog buildAlertDialog(boolean min) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		// set title
-		alertDialogBuilder.setTitle("Calibration (Minimum)");
- 
-		// set dialog message
-		alertDialogBuilder
-			.setMessage("Calibration for minimum is about to start!")
-			.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,int id) {
-					dialog.cancel();
-				}
-			  });
-		// create alert dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		return alertDialog;
+        				Color.WHITE, null));				
 	}
 	
 	@Override
 	public void run() {
 		int value = Connector.getInstance().getData();
 		if(minFlag) {
+			
 			this.minSeries.addLast(null, value);
 			this.min.add(value);
 //			this.minSeries.addLast(null,MIN_TEST[counter]);
@@ -91,12 +81,24 @@ public class CollectDataTimerTask extends TimerTask {
 		}
 	}
 	
-	private void saveConfig() {
+	private synchronized void saveConfig() {
+		Editor editor = this.settings.edit();
 		if(minFlag) {
+			editor.putInt(Values.CALIBRATED_MIN_VAL, this.getMean(this.min));
 			Connector.getInstance().setMinimum(this.getMean(this.min));
+			editor.commit();
 		}
 		else {
+			editor.putInt(Values.CALIBRATED_MAX_VAL, this.getMean(this.max));
 			Connector.getInstance().setMaximum(this.getMean(this.max));
+			editor.commit();
+			this.activity.setResult(Activity.RESULT_OK);
+			try {
+				wait(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			this.activity.finish();
 		}
 	}
 	

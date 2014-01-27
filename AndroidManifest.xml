@@ -38,8 +38,7 @@
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
         </activity>
         <activity android:name="SettingsActivity"/>
-        <activity android:name="CalibrationActivity"/>
-        <activity android:name="StatisticsActivity"/>
+        <activity android:name="CalibrationActivity" android:screenOrientation="portrait"/>
         <activity android:name="HighscoreActivity"/>
     </application>
 

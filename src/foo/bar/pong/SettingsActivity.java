@@ -21,8 +21,6 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	
 	public static final int REQUEST_CALIBRATION = 0;
 	
-	private int min;
-	private int max;
 	private TextView minTV;
 	private TextView maxTV;
 	private EditText[] data;
@@ -51,10 +49,14 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		this.minTV = (TextView) findViewById(R.id.minimumTV);
 		this.maxTV = (TextView) findViewById(R.id.maximumTV);
 		
-		this.minTV.setText(String.valueOf(this.settings.getInt(Values.CALIBRATED_MIN_VAL,
-				0)));
-		this.maxTV.setText(String.valueOf(this.settings.getInt(Values.CALIBRATED_MAX_VAL,
-				0)));
+		
+		int min = this.settings.getInt(Values.CALIBRATED_MIN_VAL, 0);
+		int max = this.settings.getInt(Values.CALIBRATED_MAX_VAL, 0);
+		if(min == 0 || max == 0) {
+			Toast.makeText(this, "Not calibrated yet!", Toast.LENGTH_LONG).show();
+		}
+		this.minTV.setText(String.valueOf(min));
+		this.maxTV.setText(String.valueOf(max));
 	}
 	
 	public void save(View view) {
@@ -85,7 +87,7 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	public void calibrate(View view) {
 		if(Connector.getInstance().hasConnection()) {
 			Intent intent = new Intent(this, CalibrationActivity.class);
-			startActivity(intent);
+			this.startActivityForResult(intent,REQUEST_CALIBRATION);
 		}
 		else {
 			Toast.makeText(this, Values.ERROR_NO_CONNECTION, Toast.LENGTH_LONG).show();
@@ -120,17 +122,22 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		this.data[Values.POS_WIFI_PW].invalidate();
 	}
 	
-	public void runCalibration(View view) {
-		Intent intent = new Intent(this, CalibrationActivity.class);
-        this.startActivityForResult(intent,REQUEST_CALIBRATION);
-	}
+//	public void runCalibration(View view) {
+//		Intent intent = new Intent(this, CalibrationActivity.class);
+//        this.startActivityForResult(intent,REQUEST_CALIBRATION);
+//	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == REQUEST_CALIBRATION) {
 			if(resultCode == RESULT_OK) {
-				int[] minMax = data.getIntArrayExtra(Values.MIN_MAX_RESULT);
+				this.minTV.setText(
+						String.valueOf(this.settings.getInt(Values.CALIBRATED_MIN_VAL, 0))
+						);
+				this.maxTV.setText(
+						String.valueOf(this.settings.getInt(Values.CALIBRATED_MAX_VAL, 0))
+						);
 			}
 		}
 	}

@@ -3,8 +3,10 @@ package foo.bar.pong;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import singleton.Connector;
 import constants.Values;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
@@ -28,14 +31,9 @@ public class CalibrationActivity extends Activity {
 	
 	
 	public static int DURATION_MS = 250;
-	
 	private static final int HISTORY_SIZE = 20;            // number of points to plot in history
 	
-	private TextView minTV;
-	private TextView maxTV;
-	private int min;
-	private int max;
-	
+	private Context c;
 	private XYPlot musclePlot = null;
 	
 	@SuppressWarnings({ "deprecation" })
@@ -43,9 +41,10 @@ public class CalibrationActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calibration_layout);
-		
+
+		this.c = this.getApplicationContext();
         this.createPlot();
-	}
+	};	
 	
 	public void createPlot() {
 		musclePlot = (XYPlot) findViewById(R.id.aprHistoryPlot);
@@ -57,7 +56,6 @@ public class CalibrationActivity extends Activity {
         		PixelUtils.dpToPix(20),
         		0,
         		PixelUtils.dpToPix(30));
-        
         musclePlot.setDomainStepValue(10);
         musclePlot.setTicksPerRangeLabel(1);
         musclePlot.setDomainLabel("time");
@@ -73,22 +71,42 @@ public class CalibrationActivity extends Activity {
 	}
 	
 	public void runCalibration(View view) {
-//		CollectDataThread collector = new CollectDataThread(musclePlot, minMuscleSeries,
-//				maxMuscleSeries);
-//		collector.run();
-		
 		Timer t = new Timer();
 		this.musclePlot.clear();
 		CollectDataTimerTask cdtt1 = new CollectDataTimerTask(this.musclePlot,
-				this, true);
+				true, this);
+		// each measure has a duration of 5 seconds
+		// 0000 ms toast
+		// 1000 ms start (min)
+		// 6000 ms end (min)
+		// 6500 ms toast
+		// 8000 ms start (max)
+		//13000 ms end (max)
+		Toast.makeText(c, "Relax muscles...", Toast.LENGTH_LONG).show();
 		t.schedule(cdtt1,
-				0,
-				250);
+				1000,
+				DURATION_MS);
+		Handler handler = new Handler();
+		handler.postDelayed(
+				new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(c, "Flex muscles...", Toast.LENGTH_LONG).show();
+					}
+				}, 6500);
+		
 		CollectDataTimerTask cdtt2 = new CollectDataTimerTask(this.musclePlot,
-				this, false);
+				false, this);
 		t.schedule(cdtt2,
-				6000,
-				250);
+				8000,
+				DURATION_MS);
+		handler.postDelayed(
+				new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(c, "Done!", Toast.LENGTH_LONG).show();
+					}
+				}, 13500);
 	}
 	
 }
