@@ -39,10 +39,12 @@ public class GameMode {
 	}
 	
 	public boolean expertTime() {
-		long messwert = (gameTimeCurrent.getTime() - gameTimeStart.getTime()) / 1000;
-		if (messwert % SECONDSTOEXPERT == 0 && messwert > lastSecond) {
-			lastSecond = messwert;
-			return true;
+		if (gameMode.equals("expert")) {
+			long messwert = (gameTimeCurrent.getTime() - gameTimeStart.getTime()) / 1000;
+			if (messwert % SECONDSTOEXPERT == 0 && messwert > lastSecond) {
+				lastSecond = messwert;
+				return true;
+			}
 		}
 		return false;
 	}
