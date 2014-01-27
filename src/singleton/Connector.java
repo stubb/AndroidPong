@@ -45,7 +45,7 @@ public class Connector {
 
 						int sum = (message[1] & 0xFF) << 8;
 						sum |= (message[0] & 0xFF);
-						System.out.println("sum: " + sum);
+						//System.out.println("sum: " + sum);
 
 						data = Integer.valueOf(sum);
 
@@ -115,7 +115,7 @@ public class Connector {
 	public int getMappedData() {
 		int mappedData = 0;
 		if (this.maximum != 0 && this.minimum != 0) {
-			mappedData = (this.data - this.minimum) / (this.maximum - this.minimum) * (RANGE_MAX - RANGE_MIN) + RANGE_MIN;
+			mappedData = Math.round(((float)(this.data - this.minimum) / (float)(this.maximum - this.minimum)) * (RANGE_MAX - RANGE_MIN) + RANGE_MIN);
 		}
 		return mappedData; 
 	}

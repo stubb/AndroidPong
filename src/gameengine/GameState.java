@@ -90,7 +90,8 @@ public class GameState {
 	
 	//The update method
 	public boolean update() {
-		p1_batX = singleton.Connector.getInstance().getMappedData();
+		p1_batX = singleton.Connector.getInstance().getMappedData() * multiplicator;
+		System.out.println(p1_batX);
 		if (p1_batX < 0)
 			p1_batX = 0;
 		else if (p1_batX + p1_batLength > screenWidth)
