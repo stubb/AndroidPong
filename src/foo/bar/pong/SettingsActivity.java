@@ -85,13 +85,11 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	}
 	
 	public void calibrate(View view) {
-		if(Connector.getInstance().hasConnection()) {
-			Intent intent = new Intent(this, CalibrationActivity.class);
-			this.startActivityForResult(intent,REQUEST_CALIBRATION);
+		if(!Connector.getInstance().hasConnection()) {
+			Connector.getInstance().startConnection();
 		}
-		else {
-			Toast.makeText(this, Values.ERROR_NO_CONNECTION, Toast.LENGTH_LONG).show();
-		}
+		Intent intent = new Intent(this, CalibrationActivity.class);
+		this.startActivityForResult(intent,REQUEST_CALIBRATION);
 	}
 
 	private void load() {

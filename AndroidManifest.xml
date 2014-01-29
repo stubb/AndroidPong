@@ -16,12 +16,11 @@
 
     <!--         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->	
 <!--     		android:theme="@android:style/Theme.NoTitleBar" -->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/musclerecoveryicon"
-        android:label="@string/app_name"
-
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+        android:label="@string/app_name" android:theme="@android:style/Theme.Holo">
         
         <activity
             android:name="foo.bar.pong.MainActivity"
@@ -35,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity android:name="GameActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" android:screenOrientation="portrait">
         </activity>
         <activity android:name="SettingsActivity"/>
         <activity android:name="CalibrationActivity" android:screenOrientation="portrait"/>

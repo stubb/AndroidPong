@@ -1,9 +1,21 @@
 package gameengine;
 
+import java.util.List;
+
+import constants.Values;
+import exceptions.GameOverException;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
@@ -13,11 +25,13 @@ public class GameThread extends Thread {
 	 */
 	private SurfaceHolder _surfaceHolder;
 	private GameState _state;
+	private Context _context;
 
-	public GameThread(SurfaceHolder surfaceHolder, Handler handler, Point screenSize, String gameMode)
+	public GameThread(Context ctx, SurfaceHolder surfaceHolder, Handler handler, Point screenSize, String gameMode)
 	{
 		_surfaceHolder = surfaceHolder;
 		_state = new GameState(screenSize, gameMode);
+		_context = ctx;
 	}
 
 	@Override
@@ -50,6 +64,49 @@ public class GameThread extends Thread {
 	      // TODO Auto-generated catch block
 	      e.printStackTrace();
       }
+		}
+		if(this._state.getGameMode().equals(Values.GAME_MODE_NORMAL) ||
+				this._state.getGameMode().equals(Values.GAME_MODE_EXPERT)) {
+//			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+//					_context);
+//	 
+//				// set title
+//				alertDialogBuilder.setTitle("Game over!");
+//	 
+//				// set dialog message
+//				alertDialogBuilder
+//					.setMessage("Click \"Post\" to save your result or \"Cancel\""
+//							+ "to go back to the main menu")
+//					.setCancelable(false)
+//					.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog,int id) {
+//							dialog.cancel();
+//						}
+//					});
+	 
+			
+			if(this._state.getGameMode().equals(Values.GAME_MODE_NORMAL)) {
+//				alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog,int id) {
+//						// if this button is clicked, close
+//						// current activity
+//					}
+//				  });
+			}
+			else if(this._state.getGameMode().equals(Values.GAME_MODE_EXPERT)) {
+//				alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog,int id) {
+//						// if this button is clicked, close
+//						// current activity
+//					}
+//				  });
+			}
+			// create alert dialog			
+//			AlertDialog alertDialog = alertDialogBuilder.create();
+ 
+			// show it
+//			alertDialog.show();
+			
 		}
 	}
 

@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	public void startNormalModeGame(View view) {
 		Editor editor = this.settings.edit();
-		editor.putString(Values.GAME_MODE, "normal");
+		editor.putString(Values.GAME_MODE, Values.GAME_MODE_NORMAL);
 		editor.commit();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	public void startExpertModeGame(View view) {
 		Editor editor = this.settings.edit();
-		editor.putString(Values.GAME_MODE, "expert");
+		editor.putString(Values.GAME_MODE, Values.GAME_MODE_EXPERT);
 		editor.commit();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 
 	public void startTrainingsModeGame(View view) {
 		Editor editor = this.settings.edit();
-		editor.putString(Values.GAME_MODE, "training");
+		editor.putString(Values.GAME_MODE, Values.GAME_MODE_TRAINING);
 		editor.commit();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);

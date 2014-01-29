@@ -44,6 +44,9 @@ public interface Values {
 	public static final String CALIBRATED_MAX_VAL = "calMaxVal";
 	
 	public static final String GAME_MODE = "normal";
+	public static final String GAME_MODE_NORMAL = "normal";
+	public static final String GAME_MODE_EXPERT = "expert";
+	public static final String GAME_MODE_TRAINING = "training";
 	
 	// result extras
 	public static final String MIN_MAX_RESULT = "minMaxResult";

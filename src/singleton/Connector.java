@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.Vector;
 
 import constants.Values;
 
@@ -92,7 +91,12 @@ public class Connector {
 	}
 
 	public boolean hasConnection() {
-		return networkThread.isAlive();
+		if (networkThread != null) {
+			return networkThread.isAlive();
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public void killConnection() {

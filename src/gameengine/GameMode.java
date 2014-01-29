@@ -54,7 +54,7 @@ public class GameMode {
 			return p2_score == MATCHPOINTS ? false : true;
 		}
 		if (gameMode.equals("expert")) {
-			return p2_score > 1 ? false : true;
+			return p2_score > 0 ? false : true;
 		}
 		if (gameMode.equals("training")) {
 			// Milliseconds als Differenz.

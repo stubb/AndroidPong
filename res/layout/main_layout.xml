@@ -2,29 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iconBigImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
-        android:adjustViewBounds="true"
-        android:maxHeight="100sp"
-        android:maxWidth="100sp"
-        android:src="@drawable/musclerecoveryicon"
-        android:contentDescription="@string/app_name" />
+<!--     <ImageView -->
+<!--         android:id="@+id/iconBigImg" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_marginBottom="10sp" -->
+<!--         android:adjustViewBounds="true" -->
+<!--         android:maxHeight="100sp" -->
+<!--         android:maxWidth="100sp" -->
+<!--         android:src="@drawable/musclerecoveryicon" -->
+<!--         android:contentDescription="@string/app_name" /> -->
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@id/iconBigImg"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-		android:textSize="30sp"
-		android:gravity="center"
-        android:text="@string/app_name" />
+<!--     <TextView -->
+<!--         android:id="@+id/textView2" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_centerHorizontal="true" -->
+<!--         android:layout_toRightOf="@id/iconBigImg" -->
+<!--         android:textAppearance="?android:attr/textAppearanceLarge" -->
+<!-- 		android:textSize="30sp" -->
+<!-- 		android:gravity="center" -->
+<!--         android:text="@string/app_name" /> -->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -38,31 +38,28 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:onClick="startNormalModeGame"
-        android:text="@string/normalModePlay" />
+        android:text="@string/normalModePlay"/>
         
     <Button
         android:id="@+id/expertModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="startExpertModeGame"
-        android:text="@string/expertModePlay" />
+        android:text="@string/expertModePlay"/>
 
     <Button
         android:id="@+id/trainingsModePlayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="startTrainingsModeGame"
-        android:text="@string/trainingsModePlay" />
+        android:text="@string/trainingsModePlay"/>
 
     <Button
         android:id="@+id/statsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="showStats"
-        android:text="@string/stats" />
-
-
-
+        android:text="@string/stats"/>
 
     </LinearLayout>
 
