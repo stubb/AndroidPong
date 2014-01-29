@@ -49,14 +49,14 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		UtilitySingleton.getInstance().switchHotSpotState();
-		Connector.getInstance().startConnection();
+		if(!UtilitySingleton.getInstance().isHotSpotRunning()) {
+			Connector.getInstance().startConnection();
+		}
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
-		UtilitySingleton.getInstance().switchHotSpotState();
 	}
 	
 	@Override
@@ -65,6 +65,7 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		Log.i(LOGTAG, "Destroy network thread");
 		Connector.getInstance().killConnection();
 		Log.i(LOGTAG, "Destroy hotspot");
+		UtilitySingleton.getInstance().disableHotspot();
 	}
 	
 	@Override

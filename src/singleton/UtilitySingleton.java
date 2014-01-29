@@ -36,18 +36,22 @@ public class UtilitySingleton {
 		this.currentActivity = activity;
 	}
 	
-	public void switchHotSpotState() {
-		if(hotSpotRunning) {
-			this.hotSpotRunning = false;
-			this.disableHotspot();
-		}
-		else {
-			this.hotSpotRunning = true;
-			this.enableHotspot();
-		}
+	public boolean isHotSpotRunning() {
+		return this.hotSpotRunning;
 	}
 	
-	private void enableHotspot() {
+//	public void switchHotSpotState() {
+//		if(hotSpotRunning) {
+//			this.hotSpotRunning = false;
+//			this.disableHotspot();
+//		}
+//		else {
+//			this.hotSpotRunning = true;
+//			this.enableHotspot();
+//		}
+//	}
+	
+	public void enableHotspot() {
 		WifiManager wifi = (WifiManager) this.currentActivity.getSystemService(Context.WIFI_SERVICE);
 		Method[] wmMethods = wifi.getClass().getDeclaredMethods();
 		wifi.setWifiEnabled(false);
@@ -68,6 +72,7 @@ public class UtilitySingleton {
 
 		    try {
 		      method.invoke(wifi, netConfig,true);
+		      this.hotSpotRunning = true;
 		    } catch (IllegalArgumentException e) {
 		      e.printStackTrace();
 		    } catch (IllegalAccessException e) {
@@ -79,7 +84,7 @@ public class UtilitySingleton {
 		}
 	}
 	
-	private void disableHotspot() {
+	public void disableHotspot() {
 	    try
 	    {
 	    	WifiManager wifi = (WifiManager) this.currentActivity.getSystemService(Context.WIFI_SERVICE);
@@ -89,6 +94,7 @@ public class UtilitySingleton {
 	            if (method.getName().equals("setWifiApEnabled")) {
 	                try {
 	                    method.invoke(wifi, null, false);
+	                    this.hotSpotRunning = false;
 	                } catch (IllegalArgumentException e) {
 	                    e.printStackTrace();
 	                } catch (IllegalAccessException e) {
