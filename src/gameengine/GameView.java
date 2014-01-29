@@ -30,7 +30,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
        setFocusableInTouchMode(true);
        final SharedPreferences settings = ctx.getSharedPreferences(Values.CONFIG, ctx.MODE_PRIVATE);
        //and instantiate the thread
-       _thread = new GameThread(this.ctx,holder, new Handler(), getScreensize(), settings.getString(Values.GAME_MODE, "normal"));
+       _thread = new GameThread(holder, new Handler(), getScreensize(), settings.getString(Values.GAME_MODE, "normal"));
    }  
 
    @Override
