@@ -19,18 +19,24 @@ public interface Values {
 	public static final Uri HOMEPAGE_URI = Uri.parse("http://www.google.com/");
 	
 	// constants for settings
+	public static final String NAME = "name";
+	public static final String SURNAME = "surname";
+	public static final String EMAIL = "email";
 	public static final String USER_NAME = "username";
 	public static final String USER_PW = "userPW";
 	public static final String WIFI_SSID = "ssid";
 	public static final String WIFI_PW = "wifiPW";
 	// USER_PW is in here twice for sheer convenience
-	public static final String[] SETTINGS_DATA = {USER_NAME, USER_PW, USER_PW, WIFI_SSID,
+	public static final String[] SETTINGS_DATA = {NAME, SURNAME, EMAIL, USER_NAME, USER_PW, USER_PW, WIFI_SSID,
 		WIFI_PW};
-	public static final int POS_USER_NAME = 0;
-	public static final int POS_USER_PW = 1;
-	public static final int POS_CONFIRM_PW = 2;
-	public static final int POS_WIFI_SSID = 3;
-	public static final int POS_WIFI_PW = 4;
+	public static final int POS_NAME = 0;
+	public static final int POS_SURNAME = 1;
+	public static final int POS_EMAIL = 2;
+	public static final int POS_USER_NAME = 3;
+	public static final int POS_USER_PW = 4;
+	public static final int POS_CONFIRM_PW = 5;
+	public static final int POS_WIFI_SSID = 6;
+	public static final int POS_WIFI_PW = 7;
 	public static final String onSettingsResultSave = "Settings successfully"
 			+ " saved.";
 	public static final String onSettingsResultRestore = "Settings successfully"

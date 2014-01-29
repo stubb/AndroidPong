@@ -1,5 +1,15 @@
 package foo.bar.pong;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import com.google.gson.Gson;
+
+import foo.bar.pong.util.FetchHighscoreDataThread;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 //import android.content.Intent;
@@ -193,7 +203,23 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.highscore_second_layout, container, false);
-           
+            	String data = "";
+            	Boolean isReady = false;
+            	String[][] plainData = {};
+            	
+				FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread("http://141.45.202.192:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend.jsp", data, isReady);
+				dataThread.start();
+				while(data.equals("")){
+					data = dataThread.getData();
+				}
+	             Gson gson = new Gson();
+	             plainData = gson.fromJson(data, String[][].class);
+	             for (int i = 0; i < plainData.length; i++) {
+	            		for (int j = 0; j < 6; j++) {
+	            			System.out.println(plainData[i][j]);
+	            		}
+	            	}
+				System.out.println("DATA: " + plainData);
             return rootView;
         }
     }

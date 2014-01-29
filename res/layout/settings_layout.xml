@@ -20,6 +20,69 @@
 			android:padding="10sp"
 			android:textAppearance="?android:attr/textAppearanceLarge"/>
 	    
+	    <!-- email -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/email"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/emailEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:inputType="textEmailAddress"
+			    android:layout_weight="0.25"/>
+	       
+	    </LinearLayout>
+	    
+	    <!-- surname -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/surname"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/surnameEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:inputType="text"
+			    android:layout_weight="0.25"/>
+	       
+	    </LinearLayout>
+	    
+	    <!-- name -->
+	    <LinearLayout 
+	       	android:layout_width="match_parent"
+	       	android:layout_height="wrap_content"
+	       	android:orientation="horizontal">
+		   
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/name"
+			    android:layout_weight="0.75"/>
+			
+			<EditText
+			    android:id="@+id/nameEditText"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:inputType="text"
+			    android:layout_weight="0.25"/>
+	       
+	    </LinearLayout>
+	    	    
 	    <!-- username -->
 	    <LinearLayout 
 	       	android:layout_width="match_parent"

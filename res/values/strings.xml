@@ -12,6 +12,9 @@
 	<string name="stats">Highscore</string>
 	
 	<!-- settings -->
+	<string name="name">Name:</string>
+	<string name="surname">Surname:</string>
+	<string name="email">Email:</string>
 	<string name="username">Username:</string>
 	<string name="ssid">SSID:</string>
 	<string name="password">Password:</string>

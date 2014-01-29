@@ -58,6 +58,12 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		this.stopHotspot();
 	}
 	
+	@Override
+	protected void onRestart() {
+		this.enableHotspot();
+		Connector.getInstance().startConnection();
+	}
+	
 	private void checkForSettings()	{
 		if(this.settings.getBoolean(Values.FIRST_START, true)) {
 			Intent intent = new Intent(this, SettingsActivity.class);
@@ -96,17 +102,16 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 
 	public void showStats(View view) {
-// TODO: connect zeug wieder einkommentieren und anpassen mit uebergabe
-//		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
-//		if (activeNetwork != null && activeNetwork.isConnected()) {
-//		    //notify user you are online
-			Intent intent = new Intent(this, HighscoreActivity.class);//StatisticsActivity.class);
+		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+		if (activeNetwork != null && activeNetwork.isConnected()) {
+		    //notify user you are online
+			Intent intent = new Intent(this, HighscoreActivity.class);
 			startActivity(intent);
-//		} else {
-//		    //notify user you are not online
-//			Toast.makeText(this, "Keine Internevtverbindung\n Daten nicht abrufbar!", Toast.LENGTH_LONG).show();
-//		} 
+		} else {
+		    //notify user you are not online
+			Toast.makeText(this, "Keine Internevtverbindung\n Daten nicht abrufbar!", Toast.LENGTH_LONG).show();
+		} 
 	}
 	
 	@Override
