@@ -113,17 +113,16 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	}
 
 	public void showStats(View view) {
-//		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
-//		if (activeNetwork != null && activeNetwork.isConnected()) {
+		final ConnectivityManager conMgr =  (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+		if (activeNetwork != null && activeNetwork.isConnected()) {
 		    //notify user you are online
-			UtilitySingleton.getInstance().disableHotspot();
 			Intent intent = new Intent(this, HighscoreActivity.class);
 			startActivity(intent);
-//		} else {
-//		    //notify user you are not online
-//			Toast.makeText(this, "Keine Internevtverbindung\n Daten nicht abrufbar!", Toast.LENGTH_LONG).show();
-//		} 
+		} else {
+		    //notify user you are not online
+			Toast.makeText(this, "Keine Internevtverbindung\n Daten nicht abrufbar!", Toast.LENGTH_LONG).show();
+		} 
 	}
 	
 	@Override
@@ -140,12 +139,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	public boolean onMenuItemClick(MenuItem item) {
 		Intent intent = null;
 		if(item.getItemId() == R.id.settings) {
-			UtilitySingleton.getInstance().disableHotspot();
 			intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 		}
 		else if(item.getItemId() == R.id.homepage) {
-			UtilitySingleton.getInstance().disableHotspot();
 			intent = new Intent(Intent.ACTION_VIEW, Values.HOMEPAGE_URI);
 			startActivity(intent);
 		}

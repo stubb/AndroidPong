@@ -178,7 +178,12 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == REQUEST_CALIBRATION) {
 			if(resultCode == RESULT_OK) {
-				int[] minMax = data.getIntArrayExtra(Values.MIN_MAX_RESULT);
+				this.minTV.setText(String.valueOf(
+						Connector.getInstance().getMinimum())
+						);
+				this.maxTV.setText(String.valueOf(
+						Connector.getInstance().getMaximum())
+						);
 			}
 		}
 	}
