@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import singleton.Connector;
+import singleton.UtilitySingleton;
 import constants.Values;
 import android.app.Activity;
 import android.content.Context;
@@ -42,6 +43,8 @@ public class CalibrationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calibration_layout);
 
+		UtilitySingleton.getInstance().setCurrentActivity(this);
+		
 		this.c = this.getApplicationContext();
         this.createPlot();
 	};	

@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import singleton.UtilitySingleton;
+
 import com.google.gson.Gson;
 
 import foo.bar.pong.util.FetchHighscoreDataThread;
@@ -44,6 +46,8 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.highscore_main_layout);
 
+        UtilitySingleton.getInstance().setCurrentActivity(this);
+        
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());

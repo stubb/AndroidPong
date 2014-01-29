@@ -14,6 +14,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.google.gson.Gson;
 
 import singleton.Connector;
+import singleton.UtilitySingleton;
 import constants.Values;
 import android.app.Activity;
 import android.content.Context;
@@ -48,6 +49,9 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_layout);
+		
+		UtilitySingleton.getInstance().setCurrentActivity(this);
+		
 		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.getReferences();
 		this.checkBox.setOnCheckedChangeListener(this);

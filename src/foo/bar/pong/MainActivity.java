@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 import singleton.Connector;
+import singleton.UtilitySingleton;
 import constants.Values;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiConfiguration;
@@ -38,15 +39,24 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);	
+		
+		UtilitySingleton.getInstance().setCurrentActivity(this);
+		
 		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.checkForSettings();
-		this.enableHotspot();
 	}
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
+		UtilitySingleton.getInstance().switchHotSpotState();
 		Connector.getInstance().startConnection();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		UtilitySingleton.getInstance().switchHotSpotState();
 	}
 	
 	@Override
@@ -55,12 +65,11 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		Log.i(LOGTAG, "Destroy network thread");
 		Connector.getInstance().killConnection();
 		Log.i(LOGTAG, "Destroy hotspot");
-		this.stopHotspot();
 	}
 	
 	@Override
 	protected void onRestart() {
-		this.enableHotspot();
+		super.onRestart();
 		Connector.getInstance().startConnection();
 	}
 	
@@ -138,61 +147,4 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		return false;
 	}
 	
-	private void enableHotspot() {
-		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		Method[] wmMethods = wifi.getClass().getDeclaredMethods();
-		wifi.setWifiEnabled(false);
-		for(Method method: wmMethods){
-		  if(method.getName().equals("setWifiApEnabled")){
-		    WifiConfiguration netConfig = new WifiConfiguration();
-		    SharedPreferences settings = this.getSharedPreferences(Values.CONFIG, Context.MODE_PRIVATE);
-		    netConfig.SSID = settings.getString(Values.SSID, "MuscleRecovery");
-		    netConfig.preSharedKey = settings.getString(Values.PKEY, "MuscleRecovery");
-		    netConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-		    netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-		    netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-		    netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-		    netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-		    netConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-		    netConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-		    netConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);  
-
-		    try {
-		      method.invoke(wifi, netConfig,true);
-		    } catch (IllegalArgumentException e) {
-		      e.printStackTrace();
-		    } catch (IllegalAccessException e) {
-		      e.printStackTrace();
-		    } catch (InvocationTargetException e) {
-		      e.printStackTrace();
-		    }
-		  }
-		}
-	}
-	
-	private void stopHotspot() {
-	    try
-	    {
-	    	WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-	        Method[] wmMethods = wifi.getClass().getDeclaredMethods();
-
-	        for (Method method : wmMethods) {
-	            if (method.getName().equals("setWifiApEnabled")) {
-	                try {
-	                    method.invoke(wifi, null, false);
-	                } catch (IllegalArgumentException e) {
-	                    e.printStackTrace();
-	                } catch (IllegalAccessException e) {
-	                    e.printStackTrace();
-	                } catch (InvocationTargetException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	    }
-	    catch(Exception e)
-	    {
-	    	e.printStackTrace();
-	    }
-	}
 }
