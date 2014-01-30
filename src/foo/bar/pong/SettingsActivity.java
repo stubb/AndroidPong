@@ -33,31 +33,32 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SettingsActivity extends Activity implements OnCheckedChangeListener{
-	
+public class SettingsActivity extends Activity implements
+		OnCheckedChangeListener {
+
 	public static final int REQUEST_CALIBRATION = 0;
-	
+
 	private int min;
 	private int max;
 	private TextView minTV;
 	private TextView maxTV;
 	private EditText[] data;
 	private CheckBox checkBox;
-	private SharedPreferences settings;	
-	
+	private SharedPreferences settings;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_layout);
-		
+
 		UtilitySingleton.getInstance().setCurrentActivity(this);
-		
+
 		this.settings = getSharedPreferences(Values.CONFIG, MODE_PRIVATE);
 		this.getReferences();
 		this.checkBox.setOnCheckedChangeListener(this);
 		this.load();
 	}
-	
+
 	private void getReferences() {
 		this.data = new EditText[Values.SETTINGS_DATA.length];
 		this.data[0] = (EditText) findViewById(R.id.nameEditText);
@@ -69,110 +70,114 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 		this.data[6] = (EditText) findViewById(R.id.ssidEditText);
 		this.data[7] = (EditText) findViewById(R.id.wifiPWEditText);
 		this.checkBox = (CheckBox) findViewById(R.id.showPWCheckBox);
-		
+
 		this.minTV = (TextView) findViewById(R.id.minimumTV);
 		this.maxTV = (TextView) findViewById(R.id.maximumTV);
-		
-		this.minTV.setText(String.valueOf(this.settings.getInt(Values.CALIBRATED_MIN_VAL,
-				0)));
-		this.maxTV.setText(String.valueOf(this.settings.getInt(Values.CALIBRATED_MAX_VAL,
-				0)));
+
+		this.minTV.setText(String.valueOf(this.settings.getInt(
+				Values.CALIBRATED_MIN_VAL, 0)));
+		this.maxTV.setText(String.valueOf(this.settings.getInt(
+				Values.CALIBRATED_MAX_VAL, 0)));
 	}
-	
+
 	public void save(View view) {
-		if(this.data[Values.POS_USER_PW].getText().toString().equals(
-				this.data[Values.POS_CONFIRM_PW].getText().toString())) {
+		if (this.data[Values.POS_USER_PW].getText().toString()
+				.equals(this.data[Values.POS_CONFIRM_PW].getText().toString())) {
 			Editor editor = this.settings.edit();
-			for(int i=0; i<this.data.length;i++) {
-				editor.putString(Values.SETTINGS_DATA[i],
-						this.data[i].getText().toString());
+			for (int i = 0; i < this.data.length; i++) {
+				editor.putString(Values.SETTINGS_DATA[i], this.data[i]
+						.getText().toString());
 			}
 			editor.commit();
 			Toast.makeText(this, Values.onSettingsResultSave,
 					Toast.LENGTH_SHORT).show();
-			this.finish();
 			registerUser();
-		}
-		else {
-			Toast.makeText(this, Values.ERROR_CONFIRM_PW, Toast.LENGTH_LONG).show();
+			this.finish();
+		} else {
+			Toast.makeText(this, Values.ERROR_CONFIRM_PW, Toast.LENGTH_LONG)
+					.show();
 		}
 	}
-	
+
 	public void restore(View view) {
 		this.load();
-		Toast.makeText(this, Values.onSettingsResultRestore,
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, Values.onSettingsResultRestore, Toast.LENGTH_SHORT)
+				.show();
 		this.finish();
 	}
-	
-    public void calibrate(View view) {
-        if(!Connector.getInstance().hasConnection()) {
-                Connector.getInstance().startConnection();
-        }
-        Intent intent = new Intent(this, CalibrationActivity.class);
-        this.startActivityForResult(intent,REQUEST_CALIBRATION);
-    }
+
+	public void calibrate(View view) {
+		if (!Connector.getInstance().hasConnection()) {
+			Connector.getInstance().startConnection();
+		}
+		Intent intent = new Intent(this, CalibrationActivity.class);
+		this.startActivityForResult(intent, REQUEST_CALIBRATION);
+	}
 
 	private void load() {
-		for(int i=0; i<this.data.length;i++) {
-			this.data[i].setText(this.settings.getString(Values.SETTINGS_DATA[i],
-					""));
+		for (int i = 0; i < this.data.length; i++) {
+			this.data[i].setText(this.settings.getString(
+					Values.SETTINGS_DATA[i], ""));
 		}
-		if(this.settings.getString(Values.SETTINGS_DATA[0],"").equals("")) {
+		if (this.settings.getString(Values.SETTINGS_DATA[0], "").equals("")) {
 			Button btn = (Button) findViewById(R.id.BtnRestoreSettings);
 			btn.setVisibility(View.INVISIBLE);
 		}
 	}
-	
+
 	private void registerUser() {
-		String[] data = {};
-		data[0] = this.settings.getString("EMAIL", "");
-		data[1] = this.settings.getString("NAME", "");
-		data[2] = this.settings.getString("SURNAME", "");
-		data[3] = this.settings.getString("USER_NAME", "");
-		data[6] = this.settings.getString("USER_PW", "");
-		TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-		data[5] = telephonyManager.getDeviceId();
-		Gson gson = new Gson();
-		String json = gson.toJson(data);
-		System.out.println(json);
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("array", json));
-		try {
-			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("");
-			httpPost.setEntity(new UrlEncodedFormEntity(params));
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-		}
-        catch(Exception e)  
-        {  
-            e.printStackTrace();
-        }  
-		
+		Thread networkThread = new Thread() {
+			public void run() {
+				String[] data = new String[6];
+				data[0] = settings.getString(Values.EMAIL, "");
+				data[1] = settings.getString(Values.NAME, "");
+				data[2] = settings.getString(Values.SURNAME, "");
+				data[3] = settings.getString(Values.USER_NAME, "");
+				data[5] = settings.getString(Values.USER_PW, "");
+				TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+				data[4] = telephonyManager.getDeviceId();
+				Gson gson = new Gson();
+				String json = gson.toJson(data);
+				System.out.println(json);
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("array", json));
+				try {
+					DefaultHttpClient httpClient = new DefaultHttpClient();
+					HttpPost httpPost = new HttpPost(
+							"http://141.45.203.141:8080/MuscleRecoveryWebServer/MuscleRecovery_Register.jsp");
+					httpPost.setEntity(new UrlEncodedFormEntity(params));
+					HttpResponse httpResponse = httpClient.execute(httpPost);
+					System.out.println(httpResponse.toString());
+					System.out.println(httpResponse.getParams());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		};
+		networkThread.start();
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		System.out.println("Debug: "+buttonView.getId()+", "+
-				isChecked);
-		if(isChecked) {
-			this.data[Values.POS_WIFI_PW].setInputType(
-					InputType.TYPE_CLASS_TEXT |
-					InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-		}
-		else {
-			this.data[Values.POS_WIFI_PW].setInputType(
-					InputType.TYPE_CLASS_TEXT | 
-					InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		System.out.println("Debug: " + buttonView.getId() + ", " + isChecked);
+		if (isChecked) {
+			this.data[Values.POS_WIFI_PW]
+					.setInputType(InputType.TYPE_CLASS_TEXT
+							| InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+		} else {
+			this.data[Values.POS_WIFI_PW]
+					.setInputType(InputType.TYPE_CLASS_TEXT
+							| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		}
 		this.data[Values.POS_WIFI_PW].invalidate();
 	}
-	
+
 	public void runCalibration(View view) {
 		Intent intent = new Intent(this, CalibrationActivity.class);
-        this.startActivityForResult(intent,REQUEST_CALIBRATION);
+		this.startActivityForResult(intent, REQUEST_CALIBRATION);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -187,5 +192,5 @@ public class SettingsActivity extends Activity implements OnCheckedChangeListene
 			}
 		}
 	}
-	
+
 }

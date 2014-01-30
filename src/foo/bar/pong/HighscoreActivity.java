@@ -26,229 +26,258 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class HighscoreActivity extends FragmentActivity implements ActionBar.TabListener {
+public class HighscoreActivity extends FragmentActivity implements
+		ActionBar.TabListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
-     * three primary sections of the app. We use a {@link android.support.v4.app.FragmentPagerAdapter}
-     * derivative, which will keep every loaded fragment in memory. If this becomes too memory
-     * intensive, it may be best to switch to a {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+	/**
+	 * The {@link android.support.v4.view.PagerAdapter} that will provide
+	 * fragments for each of the three primary sections of the app. We use a
+	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
+	 * will keep every loaded fragment in memory. If this becomes too memory
+	 * intensive, it may be best to switch to a
+	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+	 */
+	AppSectionsPagerAdapter mAppSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will display the three primary sections of the app, one at a
-     * time.
-     */
-    ViewPager mViewPager;
+	/**
+	 * The {@link ViewPager} that will display the three primary sections of the
+	 * app, one at a time.
+	 */
+	ViewPager mViewPager;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.highscore_main_layout);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.highscore_main_layout);
 
-        UtilitySingleton.getInstance().setCurrentActivity(this);
-        
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
-        mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
+		UtilitySingleton.getInstance().setCurrentActivity(this);
 
-        // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
-//        actionBar.hide();
-//        if(actionBar == null){
-//        	System.out.println("DEBUUG >>>>>>>>>> ES IST NULL");
-//        }
-        
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections
+		// of the app.
+		mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(
+				getSupportFragmentManager());
 
-        // Specify that the Home/Up button should not be enabled, since there is no hierarchical
-        // parent.
-        actionBar.setHomeButtonEnabled(false);
+		// Set up the action bar.
+		final ActionBar actionBar = getActionBar();
+		// actionBar.hide();
+		// if(actionBar == null){
+		// System.out.println("DEBUUG >>>>>>>>>> ES IST NULL");
+		// }
 
-        // Specify that we will be displaying tabs in the action bar.
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		// Specify that the Home/Up button should not be enabled, since there is
+		// no hierarchical
+		// parent.
+		actionBar.setHomeButtonEnabled(false);
 
-        // Set up the ViewPager, attaching the adapter and setting up a listener for when the
-        // user swipes between sections.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mAppSectionsPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                // When swiping between different app sections, select the corresponding tab.
-                // We can also use ActionBar.Tab#select() to do this if we have a reference to the
-                // Tab.
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
+		// Specify that we will be displaying tabs in the action bar.
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mAppSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by the adapter.
-            // Also specify this Activity object, which implements the TabListener interface, as the
-            // listener for when this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mAppSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
-    }
+		// Set up the ViewPager, attaching the adapter and setting up a listener
+		// for when the
+		// user swipes between sections.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mAppSectionsPagerAdapter);
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						// When swiping between different app sections, select
+						// the corresponding tab.
+						// We can also use ActionBar.Tab#select() to do this if
+						// we have a reference to the
+						// Tab.
+						actionBar.setSelectedNavigationItem(position);
+					}
+				});
 
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+		// For each of the sections in the app, add a tab to the action bar.
+		for (int i = 0; i < mAppSectionsPagerAdapter.getCount(); i++) {
+			// Create a tab with text corresponding to the page title defined by
+			// the adapter.
+			// Also specify this Activity object, which implements the
+			// TabListener interface, as the
+			// listener for when this tab is selected.
+			actionBar.addTab(actionBar.newTab()
+					.setText(mAppSectionsPagerAdapter.getPageTitle(i))
+					.setTabListener(this));
+		}
+	}
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
+	@Override
+	public void onTabUnselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
+	}
 
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
+	@Override
+	public void onTabSelected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
+		// When the given tab is selected, switch to the corresponding page in
+		// the ViewPager.
+		mViewPager.setCurrentItem(tab.getPosition());
+	}
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
-     * sections of the app.
-     */
-    public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+	@Override
+	public void onTabReselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
+	}
 
-        public AppSectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the primary sections of the app.
+	 */
+	public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
-        @Override
-        public Fragment getItem(int i) {
-            switch (i) {
-                case 0:
-                    // The first section of the app is the most interesting -- it offers
-                    // a launchpad into the other demonstrations in this example application.
-                    return new FirstSectionFragment();
-                    
-                case 1:
-                	return new SecondSectionFragment();
+		public AppSectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
 
-                default:
-//                    // The other sections of the app are dummy placeholders.
-//                    Fragment fragment = new DummySectionFragment();
-//                    Bundle args = new Bundle();
-//                    args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-//                    fragment.setArguments(args);
-//                    return fragment;
+		@Override
+		public Fragment getItem(int i) {
+			switch (i) {
+			case 0:
+				// The first section of the app is the most interesting -- it
+				// offers
+				// a launchpad into the other demonstrations in this example
+				// application.
+				return new FirstSectionFragment();
 
-                  // TODO ueberhaupt noetig?
-                  Fragment fragment = new FirstSectionFragment();
-                  Bundle args = new Bundle();
-                  args.putInt(FirstSectionFragment.ARG_SECTION_NUMBER, i + 1);
-                  fragment.setArguments(args);
-                  return fragment;
+			case 1:
+				return new SecondSectionFragment();
 
-            }
-        }
+			default:
+				// // The other sections of the app are dummy placeholders.
+				// Fragment fragment = new DummySectionFragment();
+				// Bundle args = new Bundle();
+				// args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
+				// fragment.setArguments(args);
+				// return fragment;
 
-        @Override
-        public int getCount() {
-            return 2;
-        }
+				// TODO ueberhaupt noetig?
+				Fragment fragment = new FirstSectionFragment();
+				Bundle args = new Bundle();
+				args.putInt(FirstSectionFragment.ARG_SECTION_NUMBER, i + 1);
+				fragment.setArguments(args);
+				return fragment;
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Section " + (position + 1);
-        }
-    }
+			}
+		}
 
-    /**
-     * A fragment that launches other parts of the demo application.
-     */
-    public static class FirstSectionFragment extends Fragment {
+		@Override
+		public int getCount() {
+			return 2;
+		}
 
-    	public static final String ARG_SECTION_NUMBER = "section_number";
-    	
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.highscore_first_layout, container, false);
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return "Section " + (position + 1);
+		}
+	}
 
-//            // Demonstration of a collection-browsing activity.
-//            rootView.findViewById(R.id.demo_collection_button)
-//                    .setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            Intent intent = new Intent(getActivity(), CollectionDemoActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    });
-//
-//            // Demonstration of navigating to external activities.
-//            rootView.findViewById(R.id.demo_external_activity)
-//                    .setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            // Create an intent that asks the user to pick a photo, but using
-//                            // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, ensures that relaunching
-//                            // the application from the device home screen does not return
-//                            // to the external activity.
-//                            Intent externalActivityIntent = new Intent(Intent.ACTION_PICK);
-//                            externalActivityIntent.setType("image/*");
-//                            externalActivityIntent.addFlags(
-//                                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//                            startActivity(externalActivityIntent);
-//                        }
-//                    });
+	/**
+	 * A fragment that launches other parts of the demo application.
+	 */
+	public static class FirstSectionFragment extends Fragment {
 
-            return rootView;
-        }
-    }
+		public static final String ARG_SECTION_NUMBER = "section_number";
 
-    
-    public static class SecondSectionFragment extends Fragment {
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.highscore_first_layout,
+					container, false);
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.highscore_second_layout, container, false);
-            	String data = "";
-            	Boolean isReady = false;
-            	String[][] plainData = {};
-            	
-				FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread("http://141.45.202.192:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend.jsp", data, isReady);
-				dataThread.start();
-				while(data.equals("")){
-					data = dataThread.getData();
-				}
-	             Gson gson = new Gson();
-	             plainData = gson.fromJson(data, String[][].class);
-	             for (int i = 0; i < plainData.length; i++) {
-	            		for (int j = 0; j < 6; j++) {
-	            			System.out.println(plainData[i][j]);
-	            		}
-	            	}
-				System.out.println("DATA: " + plainData);
-            return rootView;
-        }
-    }
+			String data = "";
+			Boolean isReady = false;
+			String[][] plainData = {};
 
-    
-    
-    
-//    /**
-//     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-//     */
-//    public static class DummySectionFragment extends Fragment {
-//
-//        public static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.highscore_second_layout, container, false);
-//            Bundle args = getArguments();
-//            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-//                    getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
-//            return rootView;
-//        }
-//    }
-	
-	
-	
+			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
+					"http://141.45.204.198:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend_ExpertMode.jsp",
+					data, isReady);
+			dataThread.start();
+			while (data.equals("")) {
+				data = dataThread.getData();
+			}
+			System.out.println(data);
+			Gson gson = new Gson();
+			plainData = gson.fromJson(data, String[][].class);
+			System.out.println("DATA1: " + plainData);
+			
+			// // Demonstration of a collection-browsing activity.
+			// rootView.findViewById(R.id.demo_collection_button)
+			// .setOnClickListener(new View.OnClickListener() {
+			// @Override
+			// public void onClick(View view) {
+			// Intent intent = new Intent(getActivity(),
+			// CollectionDemoActivity.class);
+			// startActivity(intent);
+			// }
+			// });
+			//
+			// // Demonstration of navigating to external activities.
+			// rootView.findViewById(R.id.demo_external_activity)
+			// .setOnClickListener(new View.OnClickListener() {
+			// @Override
+			// public void onClick(View view) {
+			// // Create an intent that asks the user to pick a photo, but using
+			// // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, ensures that relaunching
+			// // the application from the device home screen does not return
+			// // to the external activity.
+			// Intent externalActivityIntent = new Intent(Intent.ACTION_PICK);
+			// externalActivityIntent.setType("image/*");
+			// externalActivityIntent.addFlags(
+			// Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+			// startActivity(externalActivityIntent);
+			// }
+			// });
+
+			return rootView;
+		}
+	}
+
+	public static class SecondSectionFragment extends Fragment {
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.highscore_second_layout,
+					container, false);
+			String data = "";
+			Boolean isReady = false;
+			String[][] plainData = {};
+
+			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
+					"http://141.45.204.198:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend.jsp",
+					data, isReady);
+			dataThread.start();
+			while (data.equals("")) {
+				data = dataThread.getData();
+			}
+			System.out.println(data);
+			Gson gson = new Gson();
+			plainData = gson.fromJson(data, String[][].class);
+			System.out.println("DATA2: " + plainData);
+			return rootView;
+		}
+	}
+
+	// /**
+	// * A dummy fragment representing a section of the app, but that simply
+	// displays dummy text.
+	// */
+	// public static class DummySectionFragment extends Fragment {
+	//
+	// public static final String ARG_SECTION_NUMBER = "section_number";
+	//
+	// @Override
+	// public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	// Bundle savedInstanceState) {
+	// View rootView = inflater.inflate(R.layout.highscore_second_layout,
+	// container, false);
+	// Bundle args = getArguments();
+	// ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+	// getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
+	// return rootView;
+	// }
+	// }
+
 }
