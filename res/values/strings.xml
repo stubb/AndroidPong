@@ -30,8 +30,8 @@
 	<string name="calibrate">Calibrate</string>
 	
 	<!-- highscore -->
-    <string name="highscore_first_top">Top 10</string>
-    <string name="highscore_second_top">Your Ranking</string>
-<!--     <string name="demo_collection">Demo Collection</string> -->
+    <string name="highscore_first_top">Top 10 - normal game</string>
+    <string name="highscore_second_top">Top 10 - expert game</string>
+    <string name="highscore_your_pos">Your position: </string>
 
 </resources>

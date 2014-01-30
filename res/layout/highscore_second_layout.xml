@@ -3,17 +3,24 @@
     android:layout_height="match_parent">
 
     <LinearLayout android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+	    <TextView
+	        android:id="@+id/yourPosExpert"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/highscore_your_pos"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:layout_marginBottom="5sp" />
+	    
+   	    <ListView
+	        android:id="@+id/expertHighscoreList"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:cacheColorHint="@android:color/transparent"
+	        />
+	    
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/highscore_second_top"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </FrameLayout>
