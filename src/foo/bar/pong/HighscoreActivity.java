@@ -11,6 +11,7 @@ import singleton.UtilitySingleton;
 
 import com.google.gson.Gson;
 
+import constants.Values;
 import foo.bar.pong.util.FetchHighscoreDataThread;
 import foo.bar.pong.util.ListAdapter;
 import android.app.ActionBar;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HighscoreActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -164,133 +166,127 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
         }
     }
 
-    /**
-     * A fragment that launches other parts of the demo application.
-     */
-    public static class FirstSectionFragment extends Fragment {
+	public static class FirstSectionFragment extends Fragment {
 
-    	public static final String ARG_SECTION_NUMBER = "section_number";
-    	
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.highscore_first_layout, container, false);
-            //create listview and fill with test data
-            ListView lv = (ListView) rootView.findViewById(R.id.normalHighscoreList);
-            // TODO remove test data and get real data
-            String[][] test = {{"Peter", "42"},{"Peter", "42"},
-	    		{"Peter", "42"},{"Peter", "42"},{"Peter", "42"},
-	    		{"Peter", "42"},{"Peter", "42"},{"Peter", "42"},
-	    		{"Peter", "42"},{"Peter", "42"}};
-            ListAdapter listAdapter = new ListAdapter(
-            		UtilitySingleton.getInstance().getCurrentActivity(),
-            		test, false);
-            lv.setAdapter(listAdapter);
-            //get ones own position
-            TextView tv = (TextView) rootView.findViewById(R.id.yourPosNormal);
-            // TODO fill textview with real data
-            tv.setText(tv.getText()+" 42");
-            
-            
-            // Demonstration of a collection-browsing activity.
-//            rootView.findViewById(R.id.demo_collection_button)
-//                    .setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            Intent intent = new Intent(getActivity(), CollectionDemoActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    });
-//
-//            // Demonstration of navigating to external activities.
-//            rootView.findViewById(R.id.demo_external_activity)
-//                    .setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            // Create an intent that asks the user to pick a photo, but using
-//                            // FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, ensures that relaunching
-//                            // the application from the device home screen does not return
-//                            // to the external activity.
-//                            Intent externalActivityIntent = new Intent(Intent.ACTION_PICK);
-//                            externalActivityIntent.setType("image/*");
-//                            externalActivityIntent.addFlags(
-//                                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//                            startActivity(externalActivityIntent);
-//                        }
-//                    });
+		public static final String ARG_SECTION_NUMBER = "section_number";
 
-            return rootView;
-        }
-    }
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.highscore_first_layout,
+					container, false);
+			String data = "";
+			Boolean isReady = false;
+			String[][] plainData = {};
 
-    
-    public static class SecondSectionFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.highscore_second_layout, container, false);
-            	String data = "";
-            	Boolean isReady = false;
-            	String[][] plainData = {};
-            	
-            	// TODO comment back in from here...
-				FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread("http://141.45.202.192:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend.jsp", data, isReady);
-				dataThread.start();
-				while(data.equals("")){
-					data = dataThread.getData();
+			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
+					"http://141.45.204.198:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend.jsp",
+					data, isReady);
+			dataThread.start();
+			long startTime = System.nanoTime();
+			while (data.equals("")) {
+				data = dataThread.getData();
+				if ((System.nanoTime() - startTime) >= 1000000000l) {
+					break;
 				}
-	             Gson gson = new Gson();
-	             plainData = gson.fromJson(data, String[][].class);
-	             for (int i = 0; i < plainData.length; i++) {
-	            		for (int j = 0; j < 6; j++) {
-	            			System.out.println(plainData[i][j]);
-	            		}
-	            	}
-				System.out.println("DATA: " + plainData);
-            	// TODO ...to here
-            	
-            	//create listview and fill with test data
-                ListView lv = (ListView) rootView.findViewById(R.id.expertHighscoreList);
-                // TODO remove test data and get real data
-                String[][] test = {{"Peter", "42"},{"Peter", "42"},
-    	    		{"Peter", "42"},{"Peter", "42"},{"Peter", "42"},
-    	    		{"Peter", "42"},{"Peter", "42"},{"Peter", "42"},
-    	    		{"Peter", "42"},{"Peter", "42"}};
-                ListAdapter listAdapter = new ListAdapter(
-                		UtilitySingleton.getInstance().getCurrentActivity(),
-                		test, false);
-                lv.setAdapter(listAdapter);
-                //get ones own position
-                TextView tv = (TextView) rootView.findViewById(R.id.yourPosExpert);
-                // TODO fill textview with real data
-                tv.setText(tv.getText()+" 42");
-            	
-            return rootView;
-        }
-    }
+			}
+			TextView tv = (TextView) rootView.findViewById(R.id.yourPosNormal);
+			if (!data.equals("")) {
+				Gson gson = new Gson();
+				plainData = gson.fromJson(data, String[][].class);
+
+				// create listview and fill with test data
+				ListView lv = (ListView) rootView
+						.findViewById(R.id.normalHighscoreList);
+				ListAdapter listAdapter = new ListAdapter(UtilitySingleton
+						.getInstance().getCurrentActivity(), plainData, false);
+				lv.setAdapter(listAdapter);
+				// get ones own position
+				int myposition = 99;
+				for (int i = 0; i < plainData.length; i++) {
+					if (plainData[i][1].equals(this.getActivity()
+							.getSharedPreferences(Values.CONFIG, MODE_PRIVATE)
+							.getString(Values.USER_NAME, ""))) {
+						myposition = i;
+						break;
+					}
+				}
+				if (myposition != 99) {
+					myposition++;
+					tv.setText(tv.getText() + " " + myposition);
+				} else {
+					tv.setText(tv.getText() + " /");
+				}
+			} else {
+				tv.setText(tv.getText() + " /");
+				Toast.makeText(getActivity(),
+						"Wasn't able to fetch NormalMode data!",
+						Toast.LENGTH_LONG).show();
+			}
+
+			return rootView;
+		}
+	}
+    
+  
 
     
-    
-    
-//    /**
-//     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-//     */
-//    public static class DummySectionFragment extends Fragment {
-//
-//        public static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.highscore_second_layout, container, false);
-//            Bundle args = getArguments();
-//            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-//                    getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
-//            return rootView;
-//        }
-//    }
-	
-	
-	
+	public static class SecondSectionFragment extends Fragment {
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.highscore_second_layout,
+					container, false);
+			String data = "";
+			Boolean isReady = false;
+			String[][] plainData = {};
+
+			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
+					"http://141.45.204.198:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend_ExpertMode.jsp",
+					data, isReady);
+			dataThread.start();
+			long startTime = System.nanoTime();
+			while (data.equals("")) {
+				data = dataThread.getData();
+				if ((System.nanoTime() - startTime) >= 1000000000l) {
+					break;
+				}
+			}
+			TextView tv = (TextView) rootView.findViewById(R.id.yourPosExpert);
+			if (!data.equals("")) {
+				Gson gson = new Gson();
+				plainData = gson.fromJson(data, String[][].class);
+
+				// create listview and fill with data
+				ListView lv = (ListView) rootView
+						.findViewById(R.id.expertHighscoreList);
+				ListAdapter listAdapter = new ListAdapter(UtilitySingleton
+						.getInstance().getCurrentActivity(), plainData, true);
+				lv.setAdapter(listAdapter);
+				// get ones own position
+
+				int myposition = 99;
+				for (int i = 0; i < plainData.length; i++) {
+					if (plainData[i][1].equals(this.getActivity()
+							.getSharedPreferences(Values.CONFIG, MODE_PRIVATE)
+							.getString(Values.USER_NAME, ""))) {
+						myposition = i;
+						break;
+					}
+				}
+				if (myposition != 99) {
+					myposition++;
+					tv.setText(tv.getText() + " " + myposition);
+				} else {
+					tv.setText(tv.getText() + " /");
+				}
+			} else {
+				tv.setText(tv.getText() + " /");
+				Toast.makeText(getActivity(), "Wasn't able to fetch ExpertMode data!",
+						Toast.LENGTH_LONG).show();
+			}
+			return rootView;
+		}
+	}
 }

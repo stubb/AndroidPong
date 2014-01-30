@@ -21,6 +21,9 @@ public class ListAdapter extends ArrayAdapter<String[]> {
 	    this.expert = expert;
 	}
 	
+	// example data
+	// {"id":9,"username":"Horsti69","highscorenormalmode":27,"date":"Jan 11, 2014","time":"12:01:05 PM"}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -29,12 +32,12 @@ public class ListAdapter extends ArrayAdapter<String[]> {
 	    TextView nameView = (TextView) rowView.findViewById(R.id.tvName);
 	    TextView pointView = (TextView) rowView.findViewById(R.id.tvPoints);
     	posView.setText(" "+String.valueOf(position+1)+":");
-	    nameView.setText(this.values[position][0]);
+	    nameView.setText(this.values[position][1]);
 	    if(this.expert) {
-	    	pointView.setText(this.values[position][1]+" turns");
+	    	pointView.setText(this.values[position][2]+" sec " + "(" + this.values[position][3] + " " + this.values[position][4] + ")");
 	    }
 	    else {
-	    	pointView.setText(this.values[position][1]+" minutes");
+	    	pointView.setText(this.values[position][2]+" turns " + "(" + this.values[position][3] + " " + this.values[position][4] + ")");
 	    }
 	    return rowView;
     }
