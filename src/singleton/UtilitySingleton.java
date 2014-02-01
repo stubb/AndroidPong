@@ -10,6 +10,11 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 
+/**
+ * This singleton serves for convenience. It manages the actual activity and
+ * allows access to it's functionality from everywhere in the application.
+ * Also it can switch the blue tooth connection on and off.
+ */
 public class UtilitySingleton {
 	
 	private static UtilitySingleton instance;
@@ -51,6 +56,9 @@ public class UtilitySingleton {
 //		}
 //	}
 	
+	/**
+	 * set the parameters for the blue tooth hotspot and enable it
+	 */
 	public void enableHotspot() {
 		WifiManager wifi = (WifiManager) this.currentActivity.getSystemService(Context.WIFI_SERVICE);
 		Method[] wmMethods = wifi.getClass().getDeclaredMethods();
@@ -84,6 +92,9 @@ public class UtilitySingleton {
 		}
 	}
 	
+	/**
+	 * disables the calibrated blue tooth hotspot
+	 */
 	public void disableHotspot() {
 	    try
 	    {

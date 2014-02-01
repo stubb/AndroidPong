@@ -7,6 +7,9 @@ import java.net.SocketException;
 
 import constants.Values;
 
+/**
+ * This singleton is responsible to manage the connection to the arduino board
+ */
 public class Connector {
 
 	private static int RANGE_MIN = 1;
@@ -116,6 +119,11 @@ public class Connector {
 		return data;
 	}
 	
+	/**
+	 * maps the incoming data from the arduino board to the interval between the
+	 * measured minimum and maximum to a certain range
+	 * @return the mapped data
+	 */
 	public int getMappedData() {
 		int mappedData = 0;
 		if (this.maximum != 0 && this.minimum != 0) {

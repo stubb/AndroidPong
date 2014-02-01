@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -33,13 +32,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * This activity is responsible for managing the main menu
+ */
 public class SettingsActivity extends Activity implements
 		OnCheckedChangeListener {
 
 	public static final int REQUEST_CALIBRATION = 0;
 
-	private int min;
-	private int max;
 	private TextView minTV;
 	private TextView maxTV;
 	private EditText[] data;
@@ -59,6 +59,10 @@ public class SettingsActivity extends Activity implements
 		this.load();
 	}
 
+	/**
+	 * collect the references for all the text/edit text views which are located
+	 * on the view
+	 */
 	private void getReferences() {
 		this.data = new EditText[Values.SETTINGS_DATA.length];
 		this.data[0] = (EditText) findViewById(R.id.nameEditText);
@@ -80,6 +84,9 @@ public class SettingsActivity extends Activity implements
 				Values.CALIBRATED_MAX_VAL, 0)));
 	}
 
+	/**
+	 * Writes application relevant data to the activities data storage
+	 */
 	public void save(View view) {
 		if (this.data[Values.POS_USER_PW].getText().toString()
 				.equals(this.data[Values.POS_CONFIRM_PW].getText().toString())) {
@@ -99,6 +106,9 @@ public class SettingsActivity extends Activity implements
 		}
 	}
 
+	/**
+	 * Restores application data from the application storage
+	 */
 	public void restore(View view) {
 		this.load();
 		Toast.makeText(this, Values.onSettingsResultRestore, Toast.LENGTH_SHORT)
@@ -106,6 +116,9 @@ public class SettingsActivity extends Activity implements
 		this.finish();
 	}
 
+	/**
+	 * starts the calibration activity
+	 */
 	public void calibrate(View view) {
 		if (!Connector.getInstance().hasConnection()) {
 			Connector.getInstance().startConnection();
@@ -178,6 +191,10 @@ public class SettingsActivity extends Activity implements
 		this.startActivityForResult(intent, REQUEST_CALIBRATION);
 	}
 
+	/**
+	 * sets the new average minimum and maximum value to the appropriate text 
+	 * views
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

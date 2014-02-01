@@ -2,6 +2,9 @@ package constants;
 
 import android.net.Uri;
 
+/**
+ * interface which contains the application wide used constants
+ */
 public interface Values {
 	
 	public static final String CONFIG = "config";

@@ -5,12 +5,9 @@ import java.util.TimerTask;
 
 import singleton.Connector;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.CursorJoiner.Result;
 import android.graphics.Color;
-import android.os.Handler;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -18,6 +15,11 @@ import com.androidplot.xy.XYPlot;
 
 import constants.Values;
 
+/**
+ * This class is responsible for getting the data from the connector singleton
+ * and keeping it for the calculation of the mean of all measured values. It also
+ * prints on the plot to visualize the collected data.
+ */
 public class CollectDataTimerTask extends TimerTask {
 
 	public static int[] MIN_TEST = {10,20,30,40,4,10,70,85,91,19,93, 
@@ -81,6 +83,10 @@ public class CollectDataTimerTask extends TimerTask {
 		}
 	}
 	
+	/**
+	 * write the mean of the collected minimum/maximum data to the application
+	 * storage
+	 */
 	private synchronized void saveConfig() {
 		Editor editor = this.settings.edit();
 		if(minFlag) {
@@ -102,6 +108,12 @@ public class CollectDataTimerTask extends TimerTask {
 		}
 	}
 	
+	/**
+	 * calculates the mean of an arraylist of given integer values and returns
+	 * it
+	 * @param values The values of which the mean is to be calculated
+	 * @return the mean of the given values
+	 */
 	private int getMean(ArrayList<Integer> values) {
 		int sum=0;
 		for(int i=0; i<values.size(); i++) {

@@ -23,6 +23,11 @@ import com.androidplot.xy.*;
 import foo.bar.pong.util.CollectDataThread;
 import foo.bar.pong.util.CollectDataTimerTask;
 
+/**
+ * This activity is responsible for scheduling and starting the data collection
+ * for calibration purposes. The actual measuring and calculating is done in the
+ * CollectDataTimerTask.
+ */
 public class CalibrationActivity extends Activity {
 	int[] minValues = {100,200,300,400,42,100,700,851,912,192,931, 
             100,200,300,400,42,100,700,851,912,192};
@@ -30,7 +35,9 @@ public class CalibrationActivity extends Activity {
 	int[] maxValues = {500,100,400,200,420,10,70,51,912,192,931, 
      		10,20,30,40,42,10,70,851,92,912};
 	
-	
+	/**
+	 * intervall in which the CollectDataTimerTask will get data
+	 */
 	public static int DURATION_MS = 250;
 	private static final int HISTORY_SIZE = 20;            // number of points to plot in history
 	
@@ -73,6 +80,10 @@ public class CalibrationActivity extends Activity {
         		PixelUtils.dpToPix(16));
 	}
 	
+	/**
+	 * starts the CollectDataTimerTask after the calibrate button was pressed
+	 * @param view The button through which the calibration was started
+	 */
 	public void runCalibration(View view) {
 		Timer t = new Timer();
 		this.musclePlot.clear();

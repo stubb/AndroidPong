@@ -1,17 +1,9 @@
 package foo.bar.pong;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
 import singleton.Connector;
 import singleton.UtilitySingleton;
 import constants.Values;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;

@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * The self implemented list adapter to fill the high-score lists
+ */
 public class ListAdapter extends ArrayAdapter<String[]> {
 
 	private final Context context;
