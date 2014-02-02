@@ -94,4 +94,12 @@ public class GameMode {
 	public int p2_getScore() {
 		return p2_score;
 	}
+	
+	public int p1_getReturns() {
+		return p1_returns;
+	}
+	
+	public int p2_getReturns() {
+		return p2_returns;
+	}
 }

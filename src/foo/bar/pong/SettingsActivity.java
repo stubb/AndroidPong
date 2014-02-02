@@ -157,7 +157,7 @@ public class SettingsActivity extends Activity implements
 				try {
 					DefaultHttpClient httpClient = new DefaultHttpClient();
 					HttpPost httpPost = new HttpPost(
-							"http://141.45.203.141:8080/MuscleRecoveryWebServer/MuscleRecovery_Register.jsp");
+							Values.HOMEPAGE_URI + "MuscleRecovery_Register.jsp");
 					httpPost.setEntity(new UrlEncodedFormEntity(params));
 					HttpResponse httpResponse = httpClient.execute(httpPost);
 					System.out.println(httpResponse.toString());

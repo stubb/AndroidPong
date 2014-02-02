@@ -83,6 +83,10 @@ public class GameState {
 		return this.game.getGameMode();
 	}
 	
+	public GameMode getGame() {
+		return this.game;
+	}
+	
 	private void setScreenDimensions(Point screenSize) {
 		screenWidth = screenSize.x;
 		screenHeight = screenSize.y;
