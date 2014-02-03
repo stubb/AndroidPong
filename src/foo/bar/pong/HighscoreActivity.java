@@ -190,20 +190,27 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
 				Gson gson = new Gson();
 				plainData = gson.fromJson(Connector.getInstance().getNormalHighscoreData(), String[][].class);
 				
-				int myposition = Integer.valueOf(plainData[plainData.length - 1][0]);
-				plainData = Arrays.copyOf(plainData, plainData.length - 1);
-						
-				// create listview and fill with test data
-				ListView lv = (ListView) rootView
-						.findViewById(R.id.normalHighscoreList);
-				ListAdapter listAdapter = new ListAdapter(UtilitySingleton
-						.getInstance().getCurrentActivity(), plainData, false);
-				lv.setAdapter(listAdapter);
+				if (plainData != null) {
+					if (plainData.length >= 1) {
+						int myposition = Integer
+								.valueOf(plainData[plainData.length - 1][0]);
+						plainData = Arrays.copyOf(plainData,
+								plainData.length - 1);
 
-				if (myposition == 0) {
-					tv.setText(tv.getText() + " /");
-				} else {
-					tv.setText(tv.getText() + " " + myposition);
+						// create listview and fill with test data
+						ListView lv = (ListView) rootView
+								.findViewById(R.id.normalHighscoreList);
+						ListAdapter listAdapter = new ListAdapter(
+								UtilitySingleton.getInstance()
+										.getCurrentActivity(), plainData, false);
+						lv.setAdapter(listAdapter);
+
+						if (myposition == 0) {
+							tv.setText(tv.getText() + " /");
+						} else {
+							tv.setText(tv.getText() + " " + myposition);
+						}
+					}
 				}
 			} else {
 				tv.setText(tv.getText() + " /");
@@ -244,18 +251,27 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
 				Gson gson = new Gson();
 				plainData = gson.fromJson(Connector.getInstance().getExpertHighscoreData(), String[][].class);
 
-				int myposition = Integer.valueOf(plainData[plainData.length - 1][0]);
-				plainData = Arrays.copyOf(plainData, plainData.length - 1);
-				
-				// create listview and fill with data
-				ListView lv = (ListView) rootView.findViewById(R.id.expertHighscoreList);
-				ListAdapter listAdapter = new ListAdapter(UtilitySingleton.getInstance().getCurrentActivity(), plainData, true);
-				lv.setAdapter(listAdapter);
-				
-				if (myposition == 0) {
-					tv.setText(tv.getText() + " /");
-				} else {
-					tv.setText(tv.getText() + " " + myposition);
+				if (plainData != null) {
+					if (plainData.length >= 1) {
+						int myposition = Integer
+								.valueOf(plainData[plainData.length - 1][0]);
+						plainData = Arrays.copyOf(plainData,
+								plainData.length - 1);
+
+						// create listview and fill with data
+						ListView lv = (ListView) rootView
+								.findViewById(R.id.expertHighscoreList);
+						ListAdapter listAdapter = new ListAdapter(
+								UtilitySingleton.getInstance()
+										.getCurrentActivity(), plainData, true);
+						lv.setAdapter(listAdapter);
+
+						if (myposition == 0) {
+							tv.setText(tv.getText() + " /");
+						} else {
+							tv.setText(tv.getText() + " " + myposition);
+						}
+					}
 				}
 			} else {
 				tv.setText(tv.getText() + " /");
