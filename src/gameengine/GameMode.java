@@ -2,6 +2,9 @@ package gameengine;
 
 import java.util.Date;
 
+/**
+ * This is the actual pong game with the gamelogic.
+ */
 public class GameMode {
 	
 	private final int MATCHPOINTS = 11;

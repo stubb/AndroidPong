@@ -1,11 +1,5 @@
 package gameengine;
 
-import java.sql.Connection;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-
-import constants.Values;
-import singleton.Connector;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -14,6 +8,9 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.KeyEvent;
 
+/**
+ * Handles the current state of the game and draws the game on the canvas.
+ */
 public class GameState {
 	
 	// Objekt mit Logik der Spielmodi.

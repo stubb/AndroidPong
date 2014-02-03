@@ -20,20 +20,20 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Point;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
-import android.text.format.DateFormat;
 import android.view.SurfaceHolder;
-import android.view.View.OnCreateContextMenuListener;
 import android.widget.Toast;
 import constants.Values;
 
+/**
+ * This is an own thread holding the complete game.
+ */
 public class GameThread extends Thread {
 
 	/**
-	 * Handle to the surface manager object we interact with
+	 * Handle to the surface manager object we interact with to draw the game.
 	 */
 	private SurfaceHolder _surfaceHolder;
 	private GameState _state;
@@ -148,6 +148,9 @@ public class GameThread extends Thread {
 		return _state;
 	}
 	
+	/**
+	 * Sends the normal mode highscore data to the server.
+	 */
 	private void sendNormalModeData() {
 		Thread networkThread = new Thread() {
 			public void run() {
@@ -180,6 +183,9 @@ public class GameThread extends Thread {
 		networkThread.start();
 	}
 	
+	/**
+	 * Sends the expert game mode highscore data to the server.
+	 */
 	private void sendExpertModeData() {
 		Thread networkThread = new Thread() {
 			public void run() {

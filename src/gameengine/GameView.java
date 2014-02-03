@@ -13,6 +13,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+/**
+ * This is the View which is used to draw the game on top. It holds the game thread.
+ */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback
 {
     
