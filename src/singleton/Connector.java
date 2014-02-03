@@ -22,6 +22,8 @@ public class Connector {
 	private int minimum;
 	private int maximum;
 	
+	private String highscoreData = null;
+	
 	/**
 	 * Thread for handling network stuff.
 	 */
@@ -130,6 +132,14 @@ public class Connector {
 			mappedData = Math.round(((float)(this.data - this.minimum) / (float)(this.maximum - this.minimum)) * (RANGE_MAX - RANGE_MIN) + RANGE_MIN);
 		}
 		return mappedData; 
+	}
+	
+	public String getHighscoreData() {
+		return highscoreData;
+	}
+	
+	public void setHighscoreData(String highscoreData) {
+		this.highscoreData = highscoreData;
 	}
 
 }

@@ -1,12 +1,6 @@
 package foo.bar.pong;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import singleton.Connector;
 import singleton.UtilitySingleton;
 
 import com.google.gson.Gson;
@@ -16,7 +10,6 @@ import foo.bar.pong.util.FetchHighscoreDataThread;
 import foo.bar.pong.util.ListAdapter;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-//import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -175,26 +168,22 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.highscore_first_layout,
 					container, false);
-			String data = "";
-			Boolean isReady = false;
 			String[][] plainData = {};
 
 			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
-					"http://141.45.204.198:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend.jsp",
-					data, isReady);
+					Values.HOMEPAGE_URI + "MuscleRecovery_HighscoreSend.jsp");
 			dataThread.start();
 			long startTime = System.nanoTime();
-			while (data.equals("")) {
-				data = dataThread.getData();
-				if ((System.nanoTime() - startTime) >= 1000000000l) {
+			while (Connector.getInstance().getHighscoreData() == null) {
+				if ((System.nanoTime() - startTime) >= 2000000000l) {
 					break;
 				}
 			}
 			TextView tv = (TextView) rootView.findViewById(R.id.yourPosNormal);
-			if (!data.equals("")) {
+			if (Connector.getInstance().getHighscoreData() != null) {
 				Gson gson = new Gson();
-				plainData = gson.fromJson(data, String[][].class);
-
+				plainData = gson.fromJson(Connector.getInstance().getHighscoreData(), String[][].class);
+				
 				// create listview and fill with test data
 				ListView lv = (ListView) rootView
 						.findViewById(R.id.normalHighscoreList);
@@ -238,34 +227,28 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.highscore_second_layout,
 					container, false);
-			String data = "";
-			Boolean isReady = false;
-			String[][] plainData = {};
+			String[][] plainData = null;
 
 			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
-					"http://141.45.204.198:8080/MuscleRecoveryWebServer/MuscleRecovery_HighscoreSend_ExpertMode.jsp",
-					data, isReady);
+					Values.HOMEPAGE_URI + "MuscleRecovery_HighscoreSend_ExpertMode.jsp");
 			dataThread.start();
 			long startTime = System.nanoTime();
-			while (data.equals("")) {
-				data = dataThread.getData();
+			while (Connector.getInstance().getHighscoreData() == null) {
 				if ((System.nanoTime() - startTime) >= 1000000000l) {
 					break;
 				}
 			}
 			TextView tv = (TextView) rootView.findViewById(R.id.yourPosExpert);
-			if (!data.equals("")) {
+			if (Connector.getInstance().getHighscoreData() != null) {
 				Gson gson = new Gson();
-				plainData = gson.fromJson(data, String[][].class);
+				plainData = gson.fromJson(Connector.getInstance().getHighscoreData(), String[][].class);
 
 				// create listview and fill with data
-				ListView lv = (ListView) rootView
-						.findViewById(R.id.expertHighscoreList);
-				ListAdapter listAdapter = new ListAdapter(UtilitySingleton
-						.getInstance().getCurrentActivity(), plainData, true);
+				ListView lv = (ListView) rootView.findViewById(R.id.expertHighscoreList);
+				ListAdapter listAdapter = new ListAdapter(UtilitySingleton.getInstance().getCurrentActivity(), plainData, true);
 				lv.setAdapter(listAdapter);
+				
 				// get ones own position
-
 				int myposition = 99;
 				for (int i = 0; i < plainData.length; i++) {
 					if (plainData[i][1].equals(this.getActivity()

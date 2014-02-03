@@ -6,59 +6,58 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
-import com.google.gson.Gson;
+import singleton.Connector;
 
+/**
+ * This thread fetches highscoredata from the server. It simply downloads the
+ * data and stores it into a String, this means you have to take care about
+ * format and type by yourself.
+ */
 public class FetchHighscoreDataThread extends Thread {
-	
-         private URL url;
-         private InputStream is = null;
-         private BufferedReader br;
-         public String data;
-         private String chunk;
-         public Boolean ready;
-         private String[][] plainData;
 
-     	public FetchHighscoreDataThread(String url, String data, Boolean isReady) {
-    		try {
-    			ready = isReady;
-				this.url = new URL(url);
-				//System.out.println(url);
-				this.data = data;
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	private URL url;
+	private InputStream is = null;
+	private BufferedReader br;
+	public String data = "";
+	private String chunk;
+
+	/**
+	 * Konstruktor
+	 * 
+	 * @param url
+	 *            The url which provides data
+	 */
+	public FetchHighscoreDataThread(String url) {
+		try {
+			this.url = new URL(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Runs the thread.
+	 */
+	public void run() {
+		try {
+			is = url.openStream(); // throws an IOException
+			br = new BufferedReader(new InputStreamReader(is));
+			while ((chunk = br.readLine()) != null) {
+				data += chunk;
 			}
-    	}
-     	
-    	public void run() {
-         try {
-             is = url.openStream();  // throws an IOException
-             //System.out.println(url.toString());
-             br = new BufferedReader(new InputStreamReader(is));
-             while ((chunk = br.readLine()) != null) {
-                 data += chunk;
-                 //System.out.println(data);
-             }
-         } catch (MalformedURLException mue) {
-              mue.printStackTrace();
-         } catch (IOException ioe) {
-              ioe.printStackTrace();
-         } finally {
-             try {
-                 if (is != null) is.close();
-             } catch (IOException ioe) {
-                 // nothing to see here
-             }
-             //System.out.println("DATA: " + data);
-             ready = true;
-         }
-    	}
-         
-         public String getData() {
-        	 return data;
-         }
+		} catch (MalformedURLException mue) {
+			mue.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (is != null)
+					is.close();
+				Connector.getInstance().setHighscoreData(data);
+			} catch (IOException ioe) {
+				// nothing to see here
+			}
+		}
+	}
 }
