@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+/**
+ * The activity where the complete pong game lives.
+ */
 public class GameActivity extends Activity {
 	
 	@Override
