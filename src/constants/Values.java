@@ -19,7 +19,7 @@ public interface Values {
 	public static final int SERVER_PORT = 4321;
 	
 	// uri to homepage
-	public static final Uri HOMEPAGE_URI = Uri.parse("http://192.168.178.22:8080/MuscleRecoveryWebServer/");
+	public static final Uri HOMEPAGE_URI = Uri.parse("http://freebookexchange.f4.htw-berlin.de/MuscleRecoveryWebServer/");
 	
 	// constants for settings
 	public static final String NAME = "name";
