@@ -21,6 +21,8 @@ public class FetchHighscoreDataThread extends Thread {
 	private BufferedReader br;
 	public String data = "";
 	private String chunk;
+	// false == normal mode
+	private boolean mode = false;
 
 	/**
 	 * Konstruktor
@@ -28,8 +30,9 @@ public class FetchHighscoreDataThread extends Thread {
 	 * @param url
 	 *            The url which provides data
 	 */
-	public FetchHighscoreDataThread(String url) {
+	public FetchHighscoreDataThread(String url, boolean mode) {
 		try {
+			this.mode = mode;
 			this.url = new URL(url);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -54,7 +57,11 @@ public class FetchHighscoreDataThread extends Thread {
 			try {
 				if (is != null)
 					is.close();
-				Connector.getInstance().setHighscoreData(data);
+				if (mode) {
+					Connector.getInstance().setExpertHighscoreData(data);
+				} else {
+					Connector.getInstance().setNormalHighscoreData(data);
+				}
 			} catch (IOException ioe) {
 				// nothing to see here
 			}

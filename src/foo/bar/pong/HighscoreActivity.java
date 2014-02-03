@@ -1,5 +1,7 @@
 package foo.bar.pong;
 
+import java.util.Arrays;
+
 import singleton.Connector;
 import singleton.UtilitySingleton;
 
@@ -10,12 +12,14 @@ import foo.bar.pong.util.FetchHighscoreDataThread;
 import foo.bar.pong.util.ListAdapter;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,42 +173,37 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
 			View rootView = inflater.inflate(R.layout.highscore_first_layout,
 					container, false);
 			String[][] plainData = {};
+			
+			TelephonyManager tm = (TelephonyManager) UtilitySingleton.getInstance().getCurrentActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
 			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
-					Values.HOMEPAGE_URI + "MuscleRecovery_HighscoreSend.jsp");
+					Values.HOMEPAGE_URI + "MuscleRecovery_HighscoreSend.jsp" + "?imei=" + tm.getDeviceId(), false);
 			dataThread.start();
 			long startTime = System.nanoTime();
-			while (Connector.getInstance().getHighscoreData() == null) {
+			while (Connector.getInstance().getNormalHighscoreData() == null) {
 				if ((System.nanoTime() - startTime) >= 2000000000l) {
 					break;
 				}
 			}
 			TextView tv = (TextView) rootView.findViewById(R.id.yourPosNormal);
-			if (Connector.getInstance().getHighscoreData() != null) {
+			if (Connector.getInstance().getNormalHighscoreData() != null) {
 				Gson gson = new Gson();
-				plainData = gson.fromJson(Connector.getInstance().getHighscoreData(), String[][].class);
+				plainData = gson.fromJson(Connector.getInstance().getNormalHighscoreData(), String[][].class);
 				
+				int myposition = Integer.valueOf(plainData[plainData.length - 1][0]);
+				plainData = Arrays.copyOf(plainData, plainData.length - 1);
+						
 				// create listview and fill with test data
 				ListView lv = (ListView) rootView
 						.findViewById(R.id.normalHighscoreList);
 				ListAdapter listAdapter = new ListAdapter(UtilitySingleton
 						.getInstance().getCurrentActivity(), plainData, false);
 				lv.setAdapter(listAdapter);
-				// get ones own position
-				int myposition = 99;
-				for (int i = 0; i < plainData.length; i++) {
-					if (plainData[i][1].equals(this.getActivity()
-							.getSharedPreferences(Values.CONFIG, MODE_PRIVATE)
-							.getString(Values.USER_NAME, ""))) {
-						myposition = i;
-						break;
-					}
-				}
-				if (myposition != 99) {
-					myposition++;
-					tv.setText(tv.getText() + " " + myposition);
-				} else {
+
+				if (myposition == 0) {
 					tv.setText(tv.getText() + " /");
+				} else {
+					tv.setText(tv.getText() + " " + myposition);
 				}
 			} else {
 				tv.setText(tv.getText() + " /");
@@ -229,40 +228,34 @@ public class HighscoreActivity extends FragmentActivity implements ActionBar.Tab
 					container, false);
 			String[][] plainData = null;
 
+			TelephonyManager tm = (TelephonyManager) UtilitySingleton.getInstance().getCurrentActivity().getSystemService(Context.TELEPHONY_SERVICE);
+			
 			FetchHighscoreDataThread dataThread = new FetchHighscoreDataThread(
-					Values.HOMEPAGE_URI + "MuscleRecovery_HighscoreSend_ExpertMode.jsp");
+					Values.HOMEPAGE_URI + "MuscleRecovery_HighscoreSend_ExpertMode.jsp" + "?imei=" + tm.getDeviceId(), true);
 			dataThread.start();
 			long startTime = System.nanoTime();
-			while (Connector.getInstance().getHighscoreData() == null) {
+			while (Connector.getInstance().getExpertHighscoreData() == null) {
 				if ((System.nanoTime() - startTime) >= 1000000000l) {
 					break;
 				}
 			}
 			TextView tv = (TextView) rootView.findViewById(R.id.yourPosExpert);
-			if (Connector.getInstance().getHighscoreData() != null) {
+			if (Connector.getInstance().getExpertHighscoreData() != null) {
 				Gson gson = new Gson();
-				plainData = gson.fromJson(Connector.getInstance().getHighscoreData(), String[][].class);
+				plainData = gson.fromJson(Connector.getInstance().getExpertHighscoreData(), String[][].class);
 
+				int myposition = Integer.valueOf(plainData[plainData.length - 1][0]);
+				plainData = Arrays.copyOf(plainData, plainData.length - 1);
+				
 				// create listview and fill with data
 				ListView lv = (ListView) rootView.findViewById(R.id.expertHighscoreList);
 				ListAdapter listAdapter = new ListAdapter(UtilitySingleton.getInstance().getCurrentActivity(), plainData, true);
 				lv.setAdapter(listAdapter);
 				
-				// get ones own position
-				int myposition = 99;
-				for (int i = 0; i < plainData.length; i++) {
-					if (plainData[i][1].equals(this.getActivity()
-							.getSharedPreferences(Values.CONFIG, MODE_PRIVATE)
-							.getString(Values.USER_NAME, ""))) {
-						myposition = i;
-						break;
-					}
-				}
-				if (myposition != 99) {
-					myposition++;
-					tv.setText(tv.getText() + " " + myposition);
-				} else {
+				if (myposition == 0) {
 					tv.setText(tv.getText() + " /");
+				} else {
+					tv.setText(tv.getText() + " " + myposition);
 				}
 			} else {
 				tv.setText(tv.getText() + " /");

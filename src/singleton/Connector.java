@@ -22,7 +22,8 @@ public class Connector {
 	private int minimum;
 	private int maximum;
 	
-	private String highscoreData = null;
+	private String normalHighscoreData = null;
+	private String expertHighscoreData = null;
 	
 	/**
 	 * Thread for handling network stuff.
@@ -134,12 +135,20 @@ public class Connector {
 		return mappedData; 
 	}
 	
-	public String getHighscoreData() {
-		return highscoreData;
+	public String getNormalHighscoreData() {
+		return normalHighscoreData;
 	}
 	
-	public void setHighscoreData(String highscoreData) {
-		this.highscoreData = highscoreData;
+	public void setNormalHighscoreData(String highscoreData) {
+		this.normalHighscoreData = highscoreData;
+	}
+	
+	public String getExpertHighscoreData() {
+		return expertHighscoreData;
+	}
+	
+	public void setExpertHighscoreData(String highscoreData) {
+		this.expertHighscoreData = highscoreData;
 	}
 
 }
