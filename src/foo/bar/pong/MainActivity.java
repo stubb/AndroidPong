@@ -18,6 +18,13 @@ import android.view.View;
 import android.widget.Toast;
 import android.net.NetworkInfo;
 
+/** 
+ * This activity is used for navigation within the app.
+ * It's the default acitvity starts used on app start, except on
+ * the inital app start. In this case the settingsactivity is started.
+ * The naviagtion contains the different game modes, the highscores, settings
+ * and visiting the website.
+ */
 public class MainActivity extends Activity implements OnMenuItemClickListener {
 	
 	/**
@@ -67,6 +74,10 @@ public class MainActivity extends Activity implements OnMenuItemClickListener {
 		Connector.getInstance().startConnection();
 	}
 	
+	
+	/**
+	 * Check if the settings are already set or not. If not start the settingsactivity.
+	 */
 	private void checkForSettings()	{
 		if(this.settings.getBoolean(Values.FIRST_START, true)) {
 			Intent intent = new Intent(this, SettingsActivity.class);
