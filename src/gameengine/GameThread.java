@@ -99,7 +99,7 @@ public class GameThread extends Thread {
 
 							if (_state.getGameMode().equals(
 									Values.GAME_MODE_NORMAL)) {
-								alertDialogBuilder.setPositiveButton("Yes",
+								alertDialogBuilder.setPositiveButton("Post",
 										new DialogInterface.OnClickListener() {
 											public void onClick(
 													DialogInterface dialog,
@@ -112,7 +112,7 @@ public class GameThread extends Thread {
 										});
 							} else if (_state.getGameMode().equals(
 									Values.GAME_MODE_EXPERT)) {
-								alertDialogBuilder.setPositiveButton("Save",
+								alertDialogBuilder.setPositiveButton("Post",
 										new DialogInterface.OnClickListener() {
 											public void onClick(
 													DialogInterface dialog,
